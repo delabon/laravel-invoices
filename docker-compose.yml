@@ -34,17 +34,3 @@ services:
       - ./config/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     networks:
       - laraveltest
-
-  # node
-  node-service:
-    build:
-      context: .
-      dockerfile: ./config/node/Dockerfile
-      args:
-        - "UID=${UID:-1000}"
-        - "GID=${GID:-1000}"
-    container_name: node-container
-    volumes:
-      - ./app:/code
-    networks:
-      - laraveltest

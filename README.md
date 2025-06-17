@@ -9,14 +9,14 @@ docker compose up --build -d
 ### Run the following
 
 ```bash
-composer create-project laravel/laravel .
+docker compose exec php-service composer create-project laravel/laravel .
 ```
 
 ### Build assets
 
 ```bash
-docker compose run --rm node-service npm install
-docker compose run --rm node-service npm run build
+docker compose exec php-service npm install
+docker compose exec php-service npm run build
 ```
 
 ### Run PHPUnit tests

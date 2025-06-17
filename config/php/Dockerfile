@@ -16,6 +16,8 @@ RUN apt-get update \
     && docker-php-ext-install zip \
     && apt-get install -y sqlite3 \
     && apt-get install -y procps \
+    && apt-get install -y nodejs \
+    && apt-get install -y npm \
     && rm -rf /var/lib/apt/lists/* \
     && groupmod -g "${GID}" www-data && usermod -u "${UID}" -g "${GID}" www-data \
     && chown www-data:www-data -R /var/www
