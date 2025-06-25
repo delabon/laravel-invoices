@@ -85,12 +85,6 @@ To run Larastan tests:
 docker compose exec php-service composer test:stan
 ```
 
-To run Larastan tests:
-
-```bash
-docker compose exec php-service composer test:stan
-```
-
 ### License
 
 Do whatever you want with it!
