@@ -1,30 +1,96 @@
-## Laravel invoices
+# Laravel invoices
 
-### Up containers
+Manages invoices for my personal business (as a remote/freelance developer).
+
+This is a Laravel 12 application and uses SQLite.
+
+### Installation
+
+1. Clone the repository:
+
+```sh
+git clone git@github.com:delabon/laravel-invoices.git
+cd laravel-invoices
+```
+
+2. Build the Docker image:
 
 ```bash
 docker compose up --build -d
 ```
 
-### Run the following
+3. Install dependencies:
 
 ```bash
-docker compose exec php-service composer create-project laravel/laravel .
+docker compose exec php-service composer install
 ```
 
-### Build assets
+4. Create the .env file from .env.example:
 
 ```bash
-docker compose exec php-service npm install
-docker compose exec php-service npm run build
+docker compose exec php-service cp .env.example .env
 ```
 
-### Run PHPUnit tests
+5. Generate an application key:
 
 ```bash
-docker compose exec php-service vendor/bin/phpunit --testsuite=Unit
-docker compose exec php-service vendor/bin/phpunit --testsuite=Integration
-docker compose exec php-service vendor/bin/phpunit --testsuite=Feature
+docker compose exec php-service php artisan key:generate
 ```
 
-Open http://localhost:8022/ in your browser.
+6. Run the migration scripts:
+
+```bash
+docker compose exec php-service php artisan migrate --step
+```
+
+### Tech Stack & Tools
+
+- Backend: PHP 8.4, Laravel 12
+- Database: SQLite
+- Testing: Pest
+- Static Analysis: Larastan
+- Environment Management: Docker
+- CI: GitHub actions
+- Debug: Telescope
+
+### Testing
+
+To run all tests:
+
+```bash
+docker compose exec php-service composer test
+```
+
+To run unit tests:
+
+```bash
+docker compose exec php-service composer test:unit
+```
+
+To run feature tests:
+
+```bash
+docker compose exec php-service composer test:feature
+```
+
+To run integration tests:
+
+```bash
+docker compose exec php-service composer test:feature
+```
+
+To run Larastan tests:
+
+```bash
+docker compose exec php-service composer test:stan
+```
+
+To run Larastan tests:
+
+```bash
+docker compose exec php-service composer test:stan
+```
+
+### License
+
+Do whatever you want with it!
