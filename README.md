@@ -45,9 +45,8 @@ docker compose exec php-service php artisan migrate --step
 
 7. Check out the app:
 
-http://localhost/
-
-Telescope: http://localhost/telescope
+- http://localhost/
+- Telescope: http://localhost/telescope
 
 ### Tech Stack & Tools
 
