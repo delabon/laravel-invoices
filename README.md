@@ -43,6 +43,12 @@ docker compose exec php-service php artisan key:generate
 docker compose exec php-service php artisan migrate --step
 ```
 
+7. Check out the app:
+
+http://localhost/
+
+Telescope: http://localhost/telescope
+
 ### Tech Stack & Tools
 
 - Backend: PHP 8.4, Laravel 12
