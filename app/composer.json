@@ -60,9 +60,11 @@
         ],
         "test:pest": "pest --colors=always --parallel",
         "test:stan": "phpstan analyse",
+        "test:lint": "pint --test",
         "test": [
             "@test:pest",
-            "@test:stan"
+            "@test:stan",
+            "@test:lint"
         ]
     },
     "extra": {
