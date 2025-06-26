@@ -54,6 +54,7 @@ docker compose exec php-service php artisan migrate --step
 - Database: SQLite
 - Testing: Pest
 - Static Analysis: Larastan
+- Code Style Check: Pint
 - Environment Management: Docker
 - CI: GitHub actions
 - Debug: Telescope
