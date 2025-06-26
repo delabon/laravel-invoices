@@ -61,25 +61,13 @@ To run all tests:
 docker compose exec php-service composer test
 ```
 
-To run unit tests:
+To run Pest tests:
 
 ```bash
-docker compose exec php-service composer test:unit
+docker compose exec php-service composer test:pest
 ```
 
-To run feature tests:
-
-```bash
-docker compose exec php-service composer test:feature
-```
-
-To run integration tests:
-
-```bash
-docker compose exec php-service composer test:feature
-```
-
-To run Larastan tests:
+To run Larastan/PHPStan tests:
 
 ```bash
 docker compose exec php-service composer test:stan
@@ -87,4 +75,4 @@ docker compose exec php-service composer test:stan
 
 ### License
 
-Do whatever you want with it!
+MIT
