@@ -13,7 +13,7 @@ test('to array', function () {
         'email',
         'email_verified_at',
         'created_at',
-        'updated_at'
+        'updated_at',
     ])
         ->not
         ->toHaveKey('passowrd')
