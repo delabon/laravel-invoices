@@ -27,11 +27,11 @@ test('client must be unique', function () {
 
     $client = Client::factory()->create([
         'user_id' => $user->id,
-        'email' => 'john@example.com'
+        'email' => 'john@example.com',
     ]);
 
     $client2 = Client::factory()->create([
         'user_id' => $user->id,
-        'email' => 'john@example.com'
+        'email' => 'john@example.com',
     ]);
 })->throws(UniqueConstraintViolationException::class);

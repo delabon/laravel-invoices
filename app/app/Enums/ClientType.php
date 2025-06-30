@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum ClientType: string
@@ -10,7 +12,7 @@ enum ClientType: string
     public static function toArray(): array
     {
         return array_map(
-            static fn($case) => $case->value,
+            static fn ($case) => $case->value,
             self::cases()
         );
     }

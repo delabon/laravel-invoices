@@ -10,4 +10,3 @@ test('to array', function () {
         'person',
     ]);
 });
-
