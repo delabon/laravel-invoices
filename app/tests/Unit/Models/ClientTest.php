@@ -25,13 +25,24 @@ test('to array', function () {
 test('client must be unique', function () {
     $user = User::factory()->create();
 
-    $client = Client::factory()->create([
+    Client::factory()->create([
         'user_id' => $user->id,
         'email' => 'john@example.com',
     ]);
 
-    $client2 = Client::factory()->create([
+    Client::factory()->create([
         'user_id' => $user->id,
         'email' => 'john@example.com',
     ]);
 })->throws(UniqueConstraintViolationException::class);
+
+it('belongs to a user', function () {
+    $user = User::factory()->create();
+
+    $client = Client::factory()->create([
+        'user_id' => $user->id,
+    ]);
+
+    expect($client->user)->toBeInstanceOf(User::class)
+        ->and($client->user->is($user))->toBeTrue();;
+});
