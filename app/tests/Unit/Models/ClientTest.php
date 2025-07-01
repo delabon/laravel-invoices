@@ -44,5 +44,5 @@ it('belongs to a user', function () {
     ]);
 
     expect($client->user)->toBeInstanceOf(User::class)
-        ->and($client->user->is($user))->toBeTrue();;
+        ->and($client->user->is($user))->toBeTrue();
 });

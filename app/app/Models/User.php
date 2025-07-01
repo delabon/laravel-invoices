@@ -36,6 +36,11 @@ final class User extends Authenticatable
         'remember_token',
     ];
 
+    public function clients(): HasMany
+    {
+        return $this->hasMany(Client::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -47,10 +52,5 @@ final class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function clients(): HasMany
-    {
-        return $this->hasMany(Client::class);
     }
 }
