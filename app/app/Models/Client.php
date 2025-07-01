@@ -13,6 +13,9 @@ final class Client extends Model
     /** @use HasFactory<\Database\Factories\ClientFactory> */
     use HasFactory;
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

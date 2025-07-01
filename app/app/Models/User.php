@@ -36,6 +36,9 @@ final class User extends Authenticatable
         'remember_token',
     ];
 
+    /**
+     * @return HasMany<Client, $this>
+     */
     public function clients(): HasMany
     {
         return $this->hasMany(Client::class);
