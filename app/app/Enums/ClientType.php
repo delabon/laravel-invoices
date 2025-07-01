@@ -9,6 +9,9 @@ enum ClientType: string
     case Company = 'company';
     case Person = 'person';
 
+    /**
+     * @return string[]
+     */
     public static function toArray(): array
     {
         return array_map(
