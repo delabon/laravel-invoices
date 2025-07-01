@@ -25,9 +25,9 @@ test('to array', function () {
 it('has many clients', function () {
     $user = User::factory()->create();
 
-    $clients = Client::factory([
+    $clients = Client::factory(3)->create([
         'user_id' => $user->id,
-    ])->create(3);
+    ]);
 
     expect($user->clients)->toHaveCount(3)
         ->and($user->clients->first())->toBeInstanceOf(Client::class)
