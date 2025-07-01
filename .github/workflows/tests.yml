@@ -51,7 +51,7 @@ jobs:
         working-directory: app
 
       - name: Pest in parallel
-        run: php artisan test --parallel --processes=4
+        run: vendor/bin/pest --parallel --processes=4
         working-directory: app
 
       - name: PHPStan tests
