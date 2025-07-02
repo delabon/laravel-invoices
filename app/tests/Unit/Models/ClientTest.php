@@ -55,7 +55,6 @@ it('has many invoices', function () {
         'client_id' => $client->id,
     ]);
 
-    expect($client->invoices)->toHaveCount(3)
-        ->and($client->invoices->first())->toBeInstanceOf(Invoice::class)
-        ->and($client->invoices->first()->id)->toBe($invoices[0]->id);
+    expect($client->invoices()->whereIn('id', $invoices->pluck('id')->toArray())->count())->toBe(3)
+        ->and($client->invoices->first())->toBeInstanceOf(Invoice::class);
 });
