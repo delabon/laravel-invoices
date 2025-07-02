@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Client;
+use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Database\UniqueConstraintViolationException;
 
@@ -45,4 +46,16 @@ it('belongs to a user', function () {
 
     expect($client->user)->toBeInstanceOf(User::class)
         ->and($client->user->is($user))->toBeTrue();
+});
+
+it('has many invoices', function () {
+    $client = Client::factory()->create();
+
+    $invoices = Invoice::factory(3)->create([
+        'client_id' => $client->id,
+    ]);
+
+    expect($client->invoices)->toHaveCount(3)
+        ->and($client->invoices->first())->toBeInstanceOf(Invoice::class)
+        ->and($client->invoices->first()->id)->toBe($invoices[0]->id);
 });

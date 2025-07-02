@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Client;
+use App\Models\Invoice;
 use App\Models\User;
 
 test('to array', function () {
@@ -32,4 +33,16 @@ it('has many clients', function () {
     expect($user->clients)->toHaveCount(3)
         ->and($user->clients->first())->toBeInstanceOf(Client::class)
         ->and($user->clients->first()->id)->toBe($clients[0]->id);
+});
+
+it('has many invoices', function () {
+    $user = User::factory()->create();
+
+    $invoices = Invoice::factory(3)->create([
+        'user_id' => $user->id,
+    ]);
+
+    expect($user->invoices)->toHaveCount(3)
+        ->and($user->invoices->first())->toBeInstanceOf(Invoice::class)
+        ->and($user->invoices->first()->id)->toBe($invoices[0]->id);
 });
