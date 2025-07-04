@@ -7,10 +7,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-final class Invoice extends Model
+final class Client extends Model
 {
-    /** @use HasFactory<\Database\Factories\InvoiceFactory> */
+    /** @use HasFactory<\Database\Factories\ClientFactory> */
     use HasFactory;
 
     /**
@@ -22,10 +23,10 @@ final class Invoice extends Model
     }
 
     /**
-     * @return BelongsTo<Client, $this>
+     * @return HasMany<Invoice, $this>
      */
-    public function client(): BelongsTo
+    public function invoices(): HasMany
     {
-        return $this->belongsTo(Client::class);
+        return $this->hasMany(Invoice::class);
     }
 }
