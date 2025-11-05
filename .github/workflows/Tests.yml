@@ -13,6 +13,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # Prevent hanging
 
     steps:
       - uses: actions/checkout@v3
@@ -50,3 +51,13 @@ jobs:
 
       - name: PHPStan tests
         run: vendor/bin/phpstan --memory-limit=1G analyse
+
+      - name: Complete test job
+        if: always()
+        run: |
+          echo "Tests job completed with status: ${{ job.status }}"
+          if [ "${{ job.status }}" == "success" ]; then
+            exit 0
+          else
+            exit 1
+          fi
