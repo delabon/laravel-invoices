@@ -32,28 +32,21 @@ jobs:
 
       - name: Environment
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-        working-directory: app
 
       - name: Validate composer
         run: composer validate
-        working-directory: app
 
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-        working-directory: app
 
       - name: Generate encryption key
         run: php artisan key:generate
-        working-directory: app
 
       - name: Code Style (Laravel Pint)
         run: vendor/bin/pint --test
-        working-directory: app
 
       - name: Pest in parallel
         run: vendor/bin/pest --parallel --processes=4
-        working-directory: app
 
       - name: PHPStan tests
         run: vendor/bin/phpstan --memory-limit=1G analyse
-        working-directory: app
