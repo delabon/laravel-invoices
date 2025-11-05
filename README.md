@@ -13,44 +13,29 @@ git clone git@github.com:delabon/laravel-invoices.git
 cd laravel-invoices
 ```
 
-2. Build the Docker image:
+2. Setup:
 
 ```bash
-docker compose up --build -d
+composer install
+vendor/bin/sail up --build -d
+cp .env.example .env
+vendor/bin/sail artisan key:generate
 ```
 
-3. Install dependencies:
+3. Run the migration scripts:
 
 ```bash
-docker compose exec php-service composer install
+vendor/bin/sail artisan migrate --step
 ```
 
-4. Create the .env file from .env.example:
+4. Build the assets:
 
 ```bash
-docker compose exec php-service cp .env.example .env
+vendor/bin/sail npm install
+vendor/bin/sail npm run build
 ```
 
-5. Generate an application key:
-
-```bash
-docker compose exec php-service php artisan key:generate
-```
-
-6. Run the migration scripts:
-
-```bash
-docker compose exec php-service php artisan migrate --step
-```
-
-7. Build the assets:
-
-```bash
-docker compose exec php-service npm install
-docker compose exec php-service npm run build
-```
-
-8. Check out the app:
+5. Check out the app:
 
 - http://localhost/
 - Telescope: http://localhost/telescope
@@ -62,7 +47,7 @@ docker compose exec php-service npm run build
 - Testing: Pest
 - Static Analysis: Larastan
 - Code Style Check: Pint
-- Environment Management: Docker
+- Environment Management: Sail (Docker)
 - CI: GitHub actions
 - Debug: Telescope
 
@@ -71,19 +56,25 @@ docker compose exec php-service npm run build
 To run all tests:
 
 ```bash
-docker compose exec php-service composer test
+vendor/bin/sail composer test
 ```
 
 To run Pest tests:
 
 ```bash
-docker compose exec php-service composer test:pest
+vendor/bin/sail composer test:pest
 ```
 
 To run Larastan/PHPStan tests:
 
 ```bash
-docker compose exec php-service composer test:stan
+vendor/bin/sail composer test:stan
+```
+
+To run Pint:
+
+```bash
+vendor/bin/sail composer test:lint
 ```
 
 ### License
