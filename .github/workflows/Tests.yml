@@ -11,46 +11,37 @@ on:
       - '**.php'
 
 jobs:
-  ci:
+  tests:
     runs-on: ubuntu-latest
     timeout-minutes: 10  # Prevent hanging
-    strategy:
-      fail-fast: true
-      matrix:
-        php: [8.4]
-
-    name: Tests
 
     steps:
-      - name: Checkout
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Cache PHP Dependencies
-        id: php-cache
-        uses: actions/cache@v4
-        with:
-          path: vendor
-          key: dependencies-php-composer-${{ hashFiles('composer.lock') }}
+      - name: Install system packages
+        run: sudo apt-get update --allow-releaseinfo-change && sudo apt-get install -y curl zip
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: 8.4
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite3, pdo_sqlite
           tools: composer:v2, php-cs-fixer
           coverage: none
+        env:
+          fail-fast: true
+
+      - name: Environment
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Validate composer
         run: composer validate
 
       - name: Install Dependencies
-        if: steps.php-cache.outputs.cache-hit != 'true'
-        run: composer install --no-interaction --no-scripts --no-progress --prefer-dist --ansi
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Prepare Laravel
-        run: |
-          cp .env.example .env
-          php artisan key:generate
+      - name: Generate encryption key
+        run: php artisan key:generate
 
       - name: Code Style (Laravel Pint)
         run: vendor/bin/pint --test
