@@ -43,7 +43,14 @@ docker compose exec php-service php artisan key:generate
 docker compose exec php-service php artisan migrate --step
 ```
 
-7. Check out the app:
+7. Build the assets:
+
+```bash
+docker compose exec php-service npm install
+docker compose exec php-service npm run build
+```
+
+8. Check out the app:
 
 - http://localhost/
 - Telescope: http://localhost/telescope
