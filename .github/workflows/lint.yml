@@ -12,7 +12,7 @@ on:
   merge_group:
     branches:
       - develop
-      - master
+      - main
 
 permissions:
   contents: write
