@@ -49,17 +49,6 @@ vendor/bin/sail npm run build
 - Horizon: http://localhost/horizon
 - Mailpit: http://localhost:8025/
 
-### Tech Stack & Tools
-
-- Backend: PHP 8.4, Laravel 12
-- Database: SQLite
-- Testing: Pest
-- Static Analysis: Larastan
-- Code Style Check: Pint
-- Environment Management: Sail (Docker)
-- CI: GitHub actions
-- Debug: Telescope
-
 ### Testing
 
 To run all tests:
