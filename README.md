@@ -1,6 +1,6 @@
-# Laravel invoices
+# Dev Invoices
 
-Manages invoices for my personal business (as a remote/freelance developer).
+Manages invoices for remote/freelance developers.
 
 ### Tech Stack
 - PHP 8.4 & Laravel 12
