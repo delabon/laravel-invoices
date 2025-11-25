@@ -20,6 +20,10 @@ final class AsAddress implements CastsAttributes
             throw new InvalidArgumentException('The type of the value argument must be string.');
         }
 
+        if (! json_validate($value)) {
+            throw new InvalidArgumentException('The type of the value argument must be a valid JSON.');
+        }
+
         /** @phpstan-ignore argument.type */
         return Address::fromArray(json_decode($value, true));
     }

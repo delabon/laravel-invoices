@@ -36,6 +36,13 @@ test('get method throws InvalidArgumentException when passed value is not of typ
         ->toThrow(InvalidArgumentException::class, 'The type of the value argument must be string.');
 });
 
+test('get method throws InvalidArgumentException when passed value is not a valid JSON', function () {
+    $asAddress = new AsAddress();
+
+    expect(fn () => $asAddress->get(ClientFactory::new()->makeOne(), 'address', 'asdod09asd asd0as0das0d', []))
+        ->toThrow(InvalidArgumentException::class, 'The type of the value argument must be a valid JSON.');
+});
+
 it('prepares an array with key and JSON value when setting correctly', function () {
     $addressArray = [
         'countryCode' => 'TN',
