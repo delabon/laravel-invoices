@@ -9,7 +9,7 @@ use Database\Factories\ClientFactory;
 it('create an address instance from passed value successfully', function () {
     $addressArray = [
         'countryCode' => 'US',
-        'regionCode' => 'CA',
+        'regionCode' => 'US-CA',
         'city' => 'Los Angeles',
         'zip' => '9003',
         'lineOne' => 'Place 123',
@@ -46,7 +46,7 @@ test('get method throws InvalidArgumentException when passed value is not a vali
 it('prepares an array with key and JSON value when setting correctly', function () {
     $addressArray = [
         'countryCode' => 'TN',
-        'regionCode' => 'BZ',
+        'regionCode' => 'TN-11',
         'city' => 'Jarzouna',
         'zip' => '7020',
         'lineOne' => 'Place 456',
