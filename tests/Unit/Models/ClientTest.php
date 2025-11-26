@@ -32,7 +32,7 @@ it('belongs to a user', function () {
     ]);
     $addressData = [
         'countryCode' => 'US',
-        'regionCode' => 'NY',
+        'regionCode' => 'US-NY',
         'city' => 'New York City',
         'zip' => '10001',
         'lineOne' => 'main street 1234',
