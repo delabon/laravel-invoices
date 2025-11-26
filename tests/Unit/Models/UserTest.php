@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use App\Models\Client;
+use App\Models\UserDetail;
 use Database\Factories\ClientFactory;
+use Database\Factories\UserDetailFactory;
 use Database\Factories\UserFactory;
 
 test('to array', function () {
@@ -33,4 +35,16 @@ it('has many clients', function () {
         expect($client->user->id)->toBe($user->id)
             ->and($client)->toBeInstanceOf(Client::class);
     }
+});
+
+it('has one detail', function () {
+    $user = UserFactory::new()->create([
+        'email' => 'test8763@test.cc',
+    ]);
+    $detail = UserDetailFactory::new()->create([
+        'user_id' => $user->id,
+    ]);
+
+    expect($user->details)->toBeInstanceOf(UserDetail::class)
+        ->and($user->details->id)->toBe($detail->id);
 });

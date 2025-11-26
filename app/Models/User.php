@@ -6,12 +6,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 final class User extends Authenticatable
 {
     use Notifiable;
+
+    public const int MAX_NAME_LENGTH = 255;
 
     /**
      * The attributes that are mass assignable.
@@ -38,6 +41,11 @@ final class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function details(): HasOne
+    {
+        return $this->hasOne(UserDetail::class);
+    }
 
     public function clients(): HasMany
     {
