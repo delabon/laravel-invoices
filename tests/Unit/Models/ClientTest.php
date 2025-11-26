@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Models\Invoice;
 use App\Models\User;
 use App\ValueObjects\Address;
 use Database\Factories\ClientFactory;
+use Database\Factories\InvoiceFactory;
 use Database\Factories\UserFactory;
 
 test('to array', function () {
@@ -44,4 +46,20 @@ it('belongs to a user', function () {
 
     expect($client->user->id)->toBe($user->id)
         ->and($client->user)->toBeInstanceOf(User::class);
+});
+
+it('has many invoices', function () {
+    $client = ClientFactory::new()->create();
+
+    InvoiceFactory::times(4)->create(['client_id' => $client->id]);
+    $client->refresh();
+
+    expect($client->invoices->count())->toBe(4);
+
+    $invoiceIds = $client->invoices->pluck('id')->all();
+
+    foreach ($client->invoices as $invoice) {
+        expect($invoice)->toBeInstanceOf(Invoice::class)
+            ->and($invoice->id)->toBeIn($invoiceIds);
+    }
 });
