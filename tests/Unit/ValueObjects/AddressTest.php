@@ -26,249 +26,165 @@ it('create an instance of Address correctly', function () {
 
 dataset('invalid_country_codes', [
     [
-        [
-            'countryCode' => '', // Missing code
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        '', // Missing code
         'The country code field is required.'
     ],
     [
-        [
-            'countryCode' => 'U', // min 2 chars
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        'U', // min 2 chars
         'The country code field must be 2 characters.'
     ],
     [
-        [
-            'countryCode' => 'USA', // max 2 chars
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        'USA', // max 2 chars
         'The country code field must be 2 characters.'
     ],
     [
-        [
-            'countryCode' => '1$', // non-letters
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        '1$', // non-letters
         'The country code field format is invalid.'
     ],
     [
-        [
-            'countryCode' => 'zz', // code that does not exist
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        'zz', // code that does not exist
         'The selected country code is invalid.'
     ],
 ]);
 
-it('fails with invalid country codes', function (array $data, string $expectedMessage) {
-    expect(fn () => Address::fromArray($data))
+it('fails with invalid country codes', function (string $invalidCountryCode, string $expectedMessage) {
+    expect(fn () => Address::fromArray([
+        'countryCode' => $invalidCountryCode,
+        'regionCode' => 'US-CA',
+        'city' => 'Los Angeles',
+        'zip' => '9002',
+        'lineOne' => 'Place 123',
+    ]))
         ->toThrow(ValidationException::class, $expectedMessage);
 })->with('invalid_country_codes');
 
 dataset('invalid_region_codes', [
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => '', // Missing code
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        '', // Missing code
         'The region code field is required.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'U', // min 3 chars
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        'U', // min 3 chars
         'The region code field must be at least 3 characters.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CALIFORNIA', // max 6 chars
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        'US-CALIFORNIA', // max 6 chars
         'The region code field must not be greater than 6 characters.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => '1$-1$', // non-letters
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        '1$-1$', // non-letters
         'The region code field format is invalid.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-ZZ', // code that does not exist
-            'city' => 'Los Angeles',
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        'US-ZZ', // code that does not exist
         'The selected region code is invalid.'
     ],
 ]);
 
-it('fails with invalid region codes', function (array $data, string $expectedMessage) {
-    expect(fn () => Address::fromArray($data))
+it('fails with invalid region codes', function (string $invalidRegionCode, string $expectedMessage) {
+    expect(fn () => Address::fromArray([
+        'countryCode' => 'US',
+        'regionCode' => $invalidRegionCode,
+        'city' => 'Los Angeles',
+        'zip' => '9002',
+        'lineOne' => 'Place 123',
+    ]))
         ->toThrow(ValidationException::class, $expectedMessage);
 })->with('invalid_region_codes');
 
 dataset('invalid_city_names', [
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => '', // Empty
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        '', // Empty
         'The city field is required.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => str_repeat('a', 60), // max 50 chars
-            'zip' => '9002',
-            'lineOne' => 'Place 123',
-        ],
+        str_repeat('a', 60), // max 50 chars
         'The city field must not be greater than 50 characters.'
     ],
 ]);
 
-it('fails with invalid city names', function (array $data, string $expectedMessage) {
-    expect(fn () => Address::fromArray($data))
+it('fails with invalid city names', function (string $invalidCity, string $expectedMessage) {
+    expect(fn () => Address::fromArray([
+        'countryCode' => 'US',
+        'regionCode' => 'US-CA',
+        'city' => $invalidCity,
+        'zip' => '9002',
+        'lineOne' => 'Place 123',
+    ]))
         ->toThrow(ValidationException::class, $expectedMessage);
 })->with('invalid_city_names');
 
 dataset('invalid_zip_codes', [
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '', // Empty
-            'lineOne' => 'Place 123',
-        ],
+        '', // Empty
         'The zip field is required.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => str_repeat('a', 21), // max 20 chars
-            'lineOne' => 'Place 123',
-        ],
+        str_repeat('a', 21), // max 20 chars
         'The zip field must not be greater than 20 characters.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '!@# 3c**&^%$_+', // must only contain a-z 0-9 - case-insensitive
-            'lineOne' => 'Place 123',
-        ],
+        '!@# 3c**&^%$_+', // must only contain a-z 0-9 - case-insensitive
         'The zip field format is invalid.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '-2303', // starts with -
-            'lineOne' => 'Place 123',
-        ],
+        '-2303', // starts with -
         'The zip field format is invalid.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '7042-', // ends with -
-            'lineOne' => 'Place 123',
-        ],
+        '7042-', // ends with -
         'The zip field format is invalid.'
     ],
 ]);
 
-it('fails with invalid zip codes', function (array $data, string $expectedMessage) {
-    expect(fn () => Address::fromArray($data))
+it('fails with invalid zip codes', function (string $invalidZip, string $expectedMessage) {
+    expect(fn () => Address::fromArray([
+        'countryCode' => 'US',
+        'regionCode' => 'US-CA',
+        'city' => 'Los Angeles',
+        'zip' => $invalidZip,
+        'lineOne' => 'Place 123',
+    ]))
         ->toThrow(ValidationException::class, $expectedMessage);
 })->with('invalid_zip_codes');
 
 dataset('invalid_line_one_data', [
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '9003',
-            'lineOne' => '', // Empty
-        ],
+        '', // Empty
         'The line one field is required.'
     ],
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '7000',
-            'lineOne' => str_repeat('a', 256), // max 20 chars
-        ],
+        str_repeat('a', 256), // max 20 chars
         'The line one field must not be greater than 255 characters.'
     ],
 ]);
 
-it('fails with invalid line one address', function (array $data, string $expectedMessage) {
-    expect(fn () => Address::fromArray($data))
+it('fails with invalid line one address', function (string $invalidLineOne, string $expectedMessage) {
+    expect(fn () => Address::fromArray([
+        'countryCode' => 'US',
+        'regionCode' => 'US-CA',
+        'city' => 'Los Angeles',
+        'zip' => '9003',
+        'lineOne' => $invalidLineOne,
+    ]))
         ->toThrow(ValidationException::class, $expectedMessage);
 })->with('invalid_line_one_data');
 
 dataset('invalid_line_two_data', [
     [
-        [
-            'countryCode' => 'US',
-            'regionCode' => 'US-CA',
-            'city' => 'Los Angeles',
-            'zip' => '7000',
-            'lineOne' => 'Place 123',
-            'lineTwo' => str_repeat('a', 256), // max 20 chars
-        ],
+        str_repeat('a', 256), // max 20 chars
         'The line two field must not be greater than 255 characters.'
     ],
 ]);
 
-it('fails with invalid line two address', function (array $data, string $expectedMessage) {
-    expect(fn () => Address::fromArray($data))
+it('fails with invalid line two address', function (string $invalidLineTwo, string $expectedMessage) {
+    expect(fn () => Address::fromArray([
+        'countryCode' => 'US',
+        'regionCode' => 'US-CA',
+        'city' => 'Los Angeles',
+        'zip' => '7000',
+        'lineOne' => 'Place 123',
+        'lineTwo' => $invalidLineTwo,
+    ]))
         ->toThrow(ValidationException::class, $expectedMessage);
 })->with('invalid_line_two_data');
