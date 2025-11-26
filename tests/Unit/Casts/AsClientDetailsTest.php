@@ -3,12 +3,9 @@
 declare(strict_types=1);
 
 use App\Casts\AsClientDetails;
-use App\Casts\AsUserDetails;
 use App\ValueObjects\Address;
 use App\ValueObjects\ClientDetails;
-use App\ValueObjects\UserDetails;
 use Database\Factories\ClientFactory;
-use Database\Factories\UserDetailFactory;
 
 it('creates a ClientDetails instance from passed value successfully', function () {
     $address = new Address(
