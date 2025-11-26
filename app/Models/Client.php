@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class Client extends Model
 {
+    public const int MAX_NAME_LENGTH = 255;
+
     protected $fillable = [
         'name',
         'address',
