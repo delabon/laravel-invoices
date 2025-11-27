@@ -44,7 +44,11 @@ dataset('invalid_country_codes', [
         'The country code field format is invalid.',
     ],
     [
-        'zz', // code that does not exist
+        'zz', // only uppercase chars
+        'The country code field format is invalid.',
+    ],
+    [
+        'ZZ', // code that does not exist
         'The selected country code is invalid.',
     ],
 ]);
@@ -75,6 +79,10 @@ dataset('invalid_region_codes', [
     ],
     [
         '1$-1$', // non-letters
+        'The region code field format is invalid.',
+    ],
+    [
+        'us-zz', // code that does not exist
         'The region code field format is invalid.',
     ],
     [
