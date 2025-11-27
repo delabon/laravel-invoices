@@ -24,7 +24,7 @@ final class ValidCountryCode implements ValidationRule
             return;
         }
 
-        if (! preg_match('/^[a-z]{2}$/', $value)) {
+        if (! preg_match('/^[A-Z]{2}$/', $value)) {
             $fail('The :attribute field format is invalid.');
 
             return;
