@@ -3,10 +3,12 @@
 declare(strict_types=1);
 
 use App\Models\Client;
+use App\Models\InvoiceItem;
 use App\ValueObjects\ClientDetails;
 use App\ValueObjects\UserDetails;
 use Database\Factories\ClientFactory;
 use Database\Factories\InvoiceFactory;
+use Database\Factories\InvoiceItemFactory;
 use Illuminate\Support\Carbon;
 
 test('to array', function () {
@@ -55,4 +57,23 @@ it('belongs to a client', function () {
 
     expect($invoice->client)->toBeInstanceOf(Client::class)
         ->and($invoice->client->id)->toBe($client->id);
+});
+
+it('has many items', function () {
+    $invoice = InvoiceFactory::new()->create();
+
+    InvoiceItemFactory::times(5)->create([
+        'invoice_id' => $invoice->id,
+    ]);
+
+    $invoice->load('items');
+
+    expect($invoice->items->count())->toBe(5);
+
+    $itemIds = $invoice->items->pluck('id')->all();
+
+    foreach ($invoice->items as $item) {
+        expect($item)->toBeInstanceOf(InvoiceItem::class)
+            ->and($item->id)->toBeIn($itemIds);
+    }
 });
