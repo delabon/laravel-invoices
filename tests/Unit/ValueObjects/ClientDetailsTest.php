@@ -60,7 +60,6 @@ it('creates an instance of ClientDetails from an array of data', function () {
 });
 
 it('throws an InvalidArgumentException when create an instance of ClientDetails from an array with invalid address', function () {
-
     expect(static fn () => ClientDetails::fromArray([
         'name' => 'Mike Doe',
         'address' => '',
