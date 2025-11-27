@@ -26,11 +26,15 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        /** @phpstan-ignore foreach.nonIterable */
         foreach (SquireRepository::getSources(SquireCountry::class) as $locale => $path) {
+            /** @phpstan-ignore argument.type */
             SquireRepository::registerSource(Country::class, $locale, $path);
         }
 
+        /** @phpstan-ignore foreach.nonIterable */
         foreach (SquireRepository::getSources(SquireRegion::class) as $locale => $path) {
+            /** @phpstan-ignore argument.type */
             SquireRepository::registerSource(Region::class, $locale, $path);
         }
     }

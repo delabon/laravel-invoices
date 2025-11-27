@@ -10,6 +10,9 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
+/**
+ * @implements  CastsAttributes<UserDetails, UserDetails>
+ */
 final class AsUserDetails implements CastsAttributes
 {
     /**
@@ -25,11 +28,13 @@ final class AsUserDetails implements CastsAttributes
             throw new InvalidArgumentException('The type of the value argument must be a valid JSON.');
         }
 
+        /** @var array<string, mixed> $userDetailsData */
         $userDetailsData = json_decode($value, true);
         $address = $userDetailsData['address'] ?? null;
 
-        if (is_array($userDetailsData['address'])) {
-            $address = Address::fromArray($userDetailsData['address']);
+        if (is_array($address)) {
+            /** @phpstan-ignore argument.type */
+            $address = Address::fromArray($address);
         }
 
         $userDetailsData['address'] = $address;

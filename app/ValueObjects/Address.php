@@ -41,6 +41,7 @@ final readonly class Address
                     'required',
                     'size:'.self::COUNTRY_CODE_LENGTH,
                     'regex:/^[a-z]{2}$/i',
+                    /** @phpstan-ignore argument.type */
                     Rule::in(Country::query()->pluck('code_2')->map(static fn (string $code) => mb_strtoupper($code))->all()),
                 ],
                 'regionCode' => [
@@ -48,6 +49,7 @@ final readonly class Address
                     'min:'.self::MIN_REGION_CODE_LENGTH,
                     'max:'.self::MAX_REGION_CODE_LENGTH,
                     'regex:/^[a-z]{2}-[a-z0-9]{2,3}$/i',
+                    /** @phpstan-ignore argument.type */
                     Rule::in(Region::query()->pluck('code')->map(static fn (string $code) => mb_strtoupper($code))->all()),
                 ],
                 'city' => [

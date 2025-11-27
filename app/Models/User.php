@@ -42,11 +42,17 @@ final class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * @return HasOne<UserDetail, $this>
+     */
     public function details(): HasOne
     {
         return $this->hasOne(UserDetail::class);
     }
 
+    /**
+     * @return HasMany<Client, $this>
+     */
     public function clients(): HasMany
     {
         return $this->hasMany(Client::class);

@@ -18,6 +18,9 @@ final class InvoiceItem extends Model
         'total',
     ];
 
+    /**
+     * @return BelongsTo<Invoice, $this>
+     */
     public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class);

@@ -24,6 +24,9 @@ final class UserDetail extends Model
         'address' => AsAddress::class,
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\UserDetail;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
+use InvalidArgumentException;
+use Throwable;
 
 final readonly class UserDetails
 {
@@ -48,6 +50,7 @@ final readonly class UserDetails
 
     public static function fromUser(User $user): self
     {
+        /** @var UserDetail $userDetails */
         $userDetails = $user->details;
 
         return new self(
@@ -61,15 +64,35 @@ final readonly class UserDetails
 
     /**
      * @param  array<string, mixed>  $data
+     *
+     * @throws Throwable
      */
     public static function fromArray(array $data): self
     {
+        $name = isset($data['name']) && is_string($data['name'])
+            ? $data['name']
+            : '';
+        $email = isset($data['email']) && is_string($data['email'])
+            ? $data['email']
+            : '';
+        $taxNumber = isset($data['taxNumber']) && is_string($data['taxNumber'])
+            ? $data['taxNumber']
+            : '';
+        $phone = isset($data['phone']) && is_string($data['phone'])
+            ? $data['phone']
+            : '';
+
+        throw_if(
+            ! (isset($data['address']) && $data['address'] instanceof Address),
+            new InvalidArgumentException('The address parameter must be an instance of Address value object.')
+        );
+
         return new self(
-            name: $data['name'] ?? '',
-            email: $data['email'] ?? '',
-            address: $data['address'] ?? null,
-            taxNumber: $data['taxNumber'] ?? '',
-            phone: $data['phone'] ?? '',
+            name: $name,
+            email: $email,
+            address: $data['address'],
+            taxNumber: $taxNumber,
+            phone: $phone,
         );
     }
 }

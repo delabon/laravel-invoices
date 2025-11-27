@@ -59,6 +59,17 @@ it('creates an instance of ClientDetails from an array of data', function () {
         ->and($clientDetails->address)->toBe($address);
 });
 
+it('throws an InvalidArgumentException when create an instance of ClientDetails from an array with invalid address', function () {
+
+    expect(static fn () => ClientDetails::fromArray([
+        'name' => 'Mike Doe',
+        'address' => '',
+        'email' => 'mike@doe.cc',
+        'phone' => '667-123-432',
+        'taxNumber' => 'TC-1234-4214',
+    ]))->toThrow(InvalidArgumentException::class, 'The address parameter must be an instance of Address value object.');
+});
+
 test('to array', function () {
     $address = new Address(
         countryCode: 'US',
