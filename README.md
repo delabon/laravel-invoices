@@ -1,6 +1,6 @@
-# Laravel invoices
+# Dev Invoices
 
-Manages invoices for my personal business (as a remote/freelance developer).
+Manages invoices for remote/freelance developers.
 
 ### Tech Stack
 - PHP 8.4 & Laravel 12
@@ -48,17 +48,6 @@ vendor/bin/sail npm run build
 - Telescope: http://localhost/telescope
 - Horizon: http://localhost/horizon
 - Mailpit: http://localhost:8025/
-
-### Tech Stack & Tools
-
-- Backend: PHP 8.4, Laravel 12
-- Database: SQLite
-- Testing: Pest
-- Static Analysis: Larastan
-- Code Style Check: Pint
-- Environment Management: Sail (Docker)
-- CI: GitHub actions
-- Debug: Telescope
 
 ### Testing
 

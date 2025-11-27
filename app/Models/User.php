@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 final class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable;
+
+    public const int MAX_NAME_LENGTH = 255;
 
     /**
      * The attributes that are mass assignable.
@@ -35,16 +37,24 @@ final class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * @return HasOne<UserDetail, $this>
      */
-    protected function casts(): array
+    public function details(): HasOne
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasOne(UserDetail::class);
+    }
+
+    /**
+     * @return HasMany<Client, $this>
+     */
+    public function clients(): HasMany
+    {
+        return $this->hasMany(Client::class);
     }
 }

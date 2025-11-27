@@ -4,24 +4,24 @@ on:
   push:
     branches:
       - develop
-      - master
+      - main
     paths:
       - '**.php'
   pull_request:
     branches:
       - develop
-      - master
+      - main
     paths:
       - '**.php'
   merge_group:
     branches:
       - develop
-      - master
+      - main
     paths:
       - '**.php'
 
 jobs:
-  quality:
+  static-analysis:
     runs-on: ubuntu-latest
     environment: Testing
     steps:
