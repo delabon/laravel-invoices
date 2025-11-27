@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Client::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('title')->nullable(); // e.g. Web Development Service
+            $table->string('title'); // e.g. Web Development Service
             $table->jsonb('client_details');
             $table->jsonb('user_details');
             $table->string('uid', 30); // e.g. 2025-01-001 -> year-month-invoice number

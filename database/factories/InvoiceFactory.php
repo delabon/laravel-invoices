@@ -26,6 +26,7 @@ final class InvoiceFactory extends Factory
     {
         return [
             'client_id' => ClientFactory::new(),
+            'title' => fake()->sentence(),
             'client_details' => new ClientDetails(
                 name: fake()->name(),
                 address: $this->generateFakeAddress('us')

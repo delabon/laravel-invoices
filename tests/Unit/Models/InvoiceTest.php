@@ -15,6 +15,7 @@ test('to array', function () {
     expect($invoice->refresh()->toArray())->toHaveKeys([
         'id',
         'client_id',
+        'title',
         'client_details',
         'user_details',
         'uid',
