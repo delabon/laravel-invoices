@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 final class UserDetail extends Model
 {
     public const int MAX_TAX_NUMBER_LENGTH = 50;
+
     public const int MAX_PHONE_LENGTH = 20;
 
     protected $fillable = [

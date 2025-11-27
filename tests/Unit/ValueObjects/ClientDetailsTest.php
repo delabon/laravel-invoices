@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use App\Models\Client;
-use App\ValueObjects\ClientDetails;
 use App\ValueObjects\Address;
+use App\ValueObjects\ClientDetails;
 use Illuminate\Validation\ValidationException;
 
 it('creates an instance of ClientDetails successfully', function () {
@@ -88,11 +88,11 @@ test('to array', function () {
 dataset('invalid_name_data', [
     [
         '', // empty
-        'The name field is required.'
+        'The name field is required.',
     ],
     [
         str_repeat('a', Client::NAME_MAX_LENGTH + 1), // max length 255
-        'The name field must not be greater than 255 characters.'
+        'The name field must not be greater than 255 characters.',
     ],
 ]);
 
@@ -115,7 +115,7 @@ it('fails with invalid name data', function (string $invalidName, string $expect
 dataset('invalid_email_data', [
     [
         '&$43 9034 3*I&%$ 320 #$0032 --0 @#$#', // invalid
-        'The email field must be a valid email address.'
+        'The email field must be a valid email address.',
     ],
 ]);
 
@@ -139,7 +139,7 @@ it('fails with invalid email data', function (string $invalidEmail, string $expe
 dataset('invalid_tax_number_data', [
     [
         str_repeat('a', Client::TAX_NUMBER_MAX_LENGTH + 1), // more than max
-        'The tax number field must not be greater than 50 characters.'
+        'The tax number field must not be greater than 50 characters.',
     ],
 ]);
 
@@ -163,7 +163,7 @@ it('fails with invalid tax number data', function (string $invalidTaxNumber, str
 dataset('invalid_phone_data', [
     [
         str_repeat('a', Client::PHONE_MAX_LENGTH + 1), // more than max
-        'The phone field must not be greater than 20 characters.'
+        'The phone field must not be greater than 20 characters.',
     ],
 ]);
 
@@ -183,5 +183,3 @@ it('fails with invalid phone data', function (string $invalidPhone, string $expe
         phone: $invalidPhone
     ))->toThrow(ValidationException::class, $expectedMessage);
 })->with('invalid_phone_data');
-
-

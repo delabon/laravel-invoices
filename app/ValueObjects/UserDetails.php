@@ -26,7 +26,7 @@ final readonly class UserDetails
                 'name' => [
                     'required',
                     'string',
-                    'max:' . User::MAX_NAME_LENGTH,
+                    'max:'.User::MAX_NAME_LENGTH,
                 ],
                 'email' => [
                     'required',
@@ -35,13 +35,13 @@ final readonly class UserDetails
                 'taxNumber' => [
                     'required',
                     'string',
-                    'max:' . UserDetail::MAX_TAX_NUMBER_LENGTH,
+                    'max:'.UserDetail::MAX_TAX_NUMBER_LENGTH,
                 ],
                 'phone' => [
                     'required',
                     'string',
-                    'max:' . UserDetail::MAX_PHONE_LENGTH,
-                ]
+                    'max:'.UserDetail::MAX_PHONE_LENGTH,
+                ],
             ]
         );
     }
@@ -55,10 +55,13 @@ final readonly class UserDetails
             email: $user->email,
             address: $userDetails->address,
             taxNumber: $userDetails->tax_number,
-            phone: $userDetails->phone,
+            phone: $userDetails->phone
         );
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public static function fromArray(array $data): self
     {
         return new self(

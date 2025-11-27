@@ -25,7 +25,7 @@ final readonly class ClientDetails
                 'name' => [
                     'required',
                     'string',
-                    'max:' . Client::NAME_MAX_LENGTH,
+                    'max:'.Client::NAME_MAX_LENGTH,
                 ],
                 'email' => [
                     'nullable',
@@ -34,17 +34,20 @@ final readonly class ClientDetails
                 'phone' => [
                     'nullable',
                     'string',
-                    'max:' . Client::PHONE_MAX_LENGTH,
+                    'max:'.Client::PHONE_MAX_LENGTH,
                 ],
                 'taxNumber' => [
                     'nullable',
                     'string',
-                    'max:' . Client::TAX_NUMBER_MAX_LENGTH,
+                    'max:'.Client::TAX_NUMBER_MAX_LENGTH,
                 ],
             ]
         );
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public static function fromArray(array $data): self
     {
         return new self(

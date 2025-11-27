@@ -15,10 +15,15 @@ final readonly class Address
     use PropertiesToArray;
 
     private const int COUNTRY_CODE_LENGTH = 2;
+
     private const int MIN_REGION_CODE_LENGTH = 3;
+
     private const int MAX_REGION_CODE_LENGTH = 6;
+
     private const int MAX_CITY_LENGTH = 50;
+
     private const int MAX_ZIP_LENGTH = 20;
+
     private const int MAX_LINE_LENGTH = 255;
 
     public function __construct(
@@ -34,41 +39,41 @@ final readonly class Address
             [
                 'countryCode' => [
                     'required',
-                    'size:' . self::COUNTRY_CODE_LENGTH,
+                    'size:'.self::COUNTRY_CODE_LENGTH,
                     'regex:/^[a-z]{2}$/i',
-                    Rule::in(Country::query()->pluck('code_2')->map(static fn (string $code) => strtoupper($code))->all()),
+                    Rule::in(Country::query()->pluck('code_2')->map(static fn (string $code) => mb_strtoupper($code))->all()),
                 ],
                 'regionCode' => [
                     'required',
-                    'min:' . self::MIN_REGION_CODE_LENGTH,
-                    'max:' . self::MAX_REGION_CODE_LENGTH,
+                    'min:'.self::MIN_REGION_CODE_LENGTH,
+                    'max:'.self::MAX_REGION_CODE_LENGTH,
                     'regex:/^[a-z]{2}-[a-z0-9]{2,3}$/i',
-                    Rule::in(Region::query()->pluck('code')->map(static fn (string $code) => strtoupper($code))->all()),
+                    Rule::in(Region::query()->pluck('code')->map(static fn (string $code) => mb_strtoupper($code))->all()),
                 ],
                 'city' => [
                     'required',
-                    'max:' . self::MAX_CITY_LENGTH,
+                    'max:'.self::MAX_CITY_LENGTH,
                 ],
                 'zip' => [
                     'required',
-                    'max:' . self::MAX_ZIP_LENGTH,
+                    'max:'.self::MAX_ZIP_LENGTH,
                     'regex:/^[a-z0-9][a-z0-9-]+?[a-z0-9]$/i',
                 ],
                 'lineOne' => [
                     'required',
-                    'max:' . self::MAX_LINE_LENGTH,
+                    'max:'.self::MAX_LINE_LENGTH,
                 ],
                 'lineTwo' => [
                     'nullable',
                     'string',
-                    'max:' . self::MAX_LINE_LENGTH,
+                    'max:'.self::MAX_LINE_LENGTH,
                 ],
             ]
         );
     }
 
     /**
-     * @param array<string, null|string> $data
+     * @param  array<string, null|string>  $data
      */
     public static function fromArray(array $data): self
     {

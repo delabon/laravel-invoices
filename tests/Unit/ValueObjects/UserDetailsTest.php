@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use App\Models\UserDetail;
-use App\ValueObjects\UserDetails;
 use App\ValueObjects\Address;
+use App\ValueObjects\UserDetails;
 use Database\Factories\UserDetailFactory;
 use Database\Factories\UserFactory;
 use Illuminate\Validation\ValidationException;
@@ -108,11 +108,11 @@ it('creates an instance of UserDetails from a User model', function () {
 dataset('invalid_name_data', [
     [
         '', // empty
-        'The name field is required.'
+        'The name field is required.',
     ],
     [
         str_repeat('a', 256), // max length 255
-        'The name field must not be greater than 255 characters.'
+        'The name field must not be greater than 255 characters.',
     ],
 ]);
 
@@ -138,15 +138,15 @@ it('fails with invalid name data', function (string $invalidName, string $expect
 dataset('invalid_email_data', [
     [
         '', // empty
-        'The email field is required.'
+        'The email field is required.',
     ],
     [
         'super text', // not valid email
-        'The email field must be a valid email address.'
+        'The email field must be a valid email address.',
     ],
     [
         'super@text #$*%#@%', // not valid email
-        'The email field must be a valid email address.'
+        'The email field must be a valid email address.',
     ],
 ]);
 
@@ -172,11 +172,11 @@ it('fails with invalid email data', function (string $invalidEmail, string $expe
 dataset('invalid_tax_number_data', [
     [
         '', // empty
-        'The tax number field is required.'
+        'The tax number field is required.',
     ],
     [
         str_repeat('a', UserDetail::MAX_TAX_NUMBER_LENGTH + 1), // more than max
-        'The tax number field must not be greater than 50 characters.'
+        'The tax number field must not be greater than 50 characters.',
     ],
 ]);
 
@@ -202,11 +202,11 @@ it('fails with invalid tax number data', function (string $invalidTaxNumber, str
 dataset('invalid_phone_data', [
     [
         '', // empty
-        'The phone field is required.'
+        'The phone field is required.',
     ],
     [
         str_repeat('a', UserDetail::MAX_PHONE_LENGTH + 1), // more than max
-        'The phone field must not be greater than 20 characters.'
+        'The phone field must not be greater than 20 characters.',
     ],
 ]);
 

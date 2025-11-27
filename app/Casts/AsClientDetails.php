@@ -39,6 +39,7 @@ final class AsClientDetails implements CastsAttributes
 
     /**
      * @return array<string, false|string>
+     *
      * @throws InvalidArgumentException
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): array

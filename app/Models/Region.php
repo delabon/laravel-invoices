@@ -6,5 +6,4 @@ namespace App\Models;
 
 use Squire\Models\Region as SquireRegion;
 
-final class Region extends SquireRegion
-{}
+final class Region extends SquireRegion {}

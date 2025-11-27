@@ -17,11 +17,11 @@ trait GeneratesFakeAddress
         $regionIds = Region::query()
             ->where('country_id', $countryCode)
             ->pluck('code')
-            ->map(static fn (string $code) => strtoupper($code))
+            ->map(static fn (string $code) => mb_strtoupper($code))
             ->all();
 
         return Address::fromArray([
-            'countryCode' => strtoupper($countryCode),
+            'countryCode' => mb_strtoupper($countryCode),
             'regionCode' => fake()->randomElement($regionIds),
             'city' => fake()->city(),
             'zip' => fake()->postcode(),

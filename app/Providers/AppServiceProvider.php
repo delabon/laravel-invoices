@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Squire\Repository as SquireRepository;
-use Squire\Models\Country as SquireCountry;
-use Squire\Models\Region as SquireRegion;
 use App\Models\Country;
 use App\Models\Region;
+use Illuminate\Support\ServiceProvider;
+use Squire\Models\Country as SquireCountry;
+use Squire\Models\Region as SquireRegion;
+use Squire\Repository as SquireRepository;
 
 final class AppServiceProvider extends ServiceProvider
 {
