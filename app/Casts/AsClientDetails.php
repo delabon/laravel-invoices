@@ -6,7 +6,6 @@ namespace App\Casts;
 
 use App\ValueObjects\Address;
 use App\ValueObjects\ClientDetails;
-use App\ValueObjects\UserDetails;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;

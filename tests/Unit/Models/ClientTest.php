@@ -17,6 +17,9 @@ test('to array', function () {
         'user_id',
         'name',
         'address',
+        'tax_number',
+        'phone',
+        'email',
         'created_at',
         'updated_at',
     ]);

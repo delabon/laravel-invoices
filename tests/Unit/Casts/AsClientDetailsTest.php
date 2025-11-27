@@ -60,6 +60,9 @@ it('prepares an array with key and JSON value when setting correctly', function 
     $clientDetailsArray = [
         'name' => 'Mike Doe',
         'address' => $address,
+        'email' => 'mike@doe.cc',
+        'phone' => null,
+        'taxNumber' => 'TAX-543-CAD',
     ];
     $clientDetails = ClientDetails::fromArray($clientDetailsArray);
     $asClientDetails = new AsClientDetails();
