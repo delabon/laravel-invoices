@@ -14,17 +14,11 @@ final readonly class Address
 {
     use PropertiesToArray;
 
-    private const int COUNTRY_CODE_LENGTH = 2;
+    public const int MAX_CITY_LENGTH = 50;
 
-    private const int MIN_REGION_CODE_LENGTH = 3;
+    public const int MAX_ZIP_LENGTH = 20;
 
-    private const int MAX_REGION_CODE_LENGTH = 6;
-
-    private const int MAX_CITY_LENGTH = 50;
-
-    private const int MAX_ZIP_LENGTH = 20;
-
-    private const int MAX_LINE_LENGTH = 255;
+    public const int MAX_LINE_LENGTH = 255;
 
     public function __construct(
         public string $countryCode,
@@ -39,15 +33,15 @@ final readonly class Address
             [
                 'countryCode' => [
                     'required',
-                    'size:'.self::COUNTRY_CODE_LENGTH,
+                    'size:'.Country::CODE_LENGTH,
                     'regex:/^[a-z]{2}$/i',
                     /** @phpstan-ignore argument.type */
                     Rule::in(Country::query()->pluck('code_2')->map(static fn (string $code) => mb_strtoupper($code))->all()),
                 ],
                 'regionCode' => [
                     'required',
-                    'min:'.self::MIN_REGION_CODE_LENGTH,
-                    'max:'.self::MAX_REGION_CODE_LENGTH,
+                    'min:'.Region::CODE_MIN_LENGTH,
+                    'max:'.Region::CODE_MAX_LENGTH,
                     'regex:/^[a-z]{2}-[a-z0-9]{2,3}$/i',
                     /** @phpstan-ignore argument.type */
                     Rule::in(Region::query()->pluck('code')->map(static fn (string $code) => mb_strtoupper($code))->all()),
