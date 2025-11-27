@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\ValueObjects;
 
-use App\Models\Country;
 use App\Models\Region;
+use App\Rules\ValidCountryCode;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -33,10 +33,7 @@ final readonly class Address
             [
                 'countryCode' => [
                     'required',
-                    'size:'.Country::CODE_LENGTH,
-                    'regex:/^[a-z]{2}$/i',
-                    /** @phpstan-ignore argument.type */
-                    Rule::in(Country::query()->pluck('code_2')->map(static fn (string $code) => mb_strtoupper($code))->all()),
+                    new ValidCountryCode(),
                 ],
                 'regionCode' => [
                     'required',
