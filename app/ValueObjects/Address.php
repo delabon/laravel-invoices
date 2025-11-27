@@ -6,6 +6,7 @@ namespace App\ValueObjects;
 
 use App\Models\Region;
 use App\Rules\ValidCountryCode;
+use App\Rules\ValidRegionCode;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -37,11 +38,7 @@ final readonly class Address
                 ],
                 'regionCode' => [
                     'required',
-                    'min:'.Region::CODE_MIN_LENGTH,
-                    'max:'.Region::CODE_MAX_LENGTH,
-                    'regex:/^[a-z]{2}-[a-z0-9]{2,3}$/i',
-                    /** @phpstan-ignore argument.type */
-                    Rule::in(Region::query()->pluck('code')->map(static fn (string $code) => mb_strtoupper($code))->all()),
+                    new ValidRegionCode(),
                 ],
                 'city' => [
                     'required',
