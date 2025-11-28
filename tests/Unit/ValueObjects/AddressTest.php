@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Country;
-use App\Models\Region;
+use App\Rules\ValidRegionCode;
 use App\ValueObjects\Address;
 use Illuminate\Validation\ValidationException;
 
@@ -70,7 +70,7 @@ dataset('invalid_region_codes', [
         'The region code field is required.',
     ],
     [
-        str_repeat('U', Region::CODE_MIN_LENGTH - 1), // min 3 chars
+        str_repeat('U', ValidRegionCode::CODE_MIN_LENGTH - 1), // min 3 chars
         'The region code field must be at least 3 characters.',
     ],
     [

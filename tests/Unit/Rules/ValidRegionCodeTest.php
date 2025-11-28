@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Region;
 use App\Rules\ValidRegionCode;
 use Illuminate\Validation\ValidationException;
 
@@ -16,7 +15,7 @@ it('does not fail when a region code is valid', function () {
 
 dataset('invalid_region_codes', [
     [
-        str_repeat('U', Region::CODE_MIN_LENGTH - 1), // min 3 chars
+        str_repeat('U', ValidRegionCode::CODE_MIN_LENGTH - 1), // min 3 chars
         'The region code field must be at least 3 characters.',
     ],
     [

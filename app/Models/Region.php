@@ -6,9 +6,4 @@ namespace App\Models;
 
 use Squire\Models\Region as SquireRegion;
 
-final class Region extends SquireRegion
-{
-    public const int CODE_MIN_LENGTH = 3;
-
-    public const int CODE_MAX_LENGTH = 6;
-}
+final class Region extends SquireRegion {}
