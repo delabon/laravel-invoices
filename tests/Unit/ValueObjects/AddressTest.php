@@ -164,7 +164,7 @@ dataset('invalid_line_one_data', [
         'The line one field is required.',
     ],
     [
-        str_repeat('a', Address::MAX_LINE_LENGTH + 1), // max 20 chars
+        str_repeat('a', Address::LINE_MAX_LENGTH + 1), // max 20 chars
         'The line one field must not be greater than 255 characters.',
     ],
 ]);
@@ -182,7 +182,7 @@ it('fails with invalid line one address', function (string $invalidLineOne, stri
 
 dataset('invalid_line_two_data', [
     [
-        str_repeat('a', Address::MAX_LINE_LENGTH + 1), // max 20 chars
+        str_repeat('a', Address::LINE_MAX_LENGTH + 1), // max 20 chars
         'The line two field must not be greater than 255 characters.',
     ],
 ]);

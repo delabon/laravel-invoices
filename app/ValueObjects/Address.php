@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\ValueObjects;
 
+use App\Rules\ValidAddressLine;
 use App\Rules\ValidCity;
 use App\Rules\ValidCountryCode;
 use App\Rules\ValidRegionCode;
@@ -19,7 +20,7 @@ final readonly class Address
 
     public const int ZIP_MAX_LENGTH = 20;
 
-    public const int MAX_LINE_LENGTH = 255;
+    public const int LINE_MAX_LENGTH = 255;
 
     public function __construct(
         public string $countryCode,
@@ -50,12 +51,11 @@ final readonly class Address
                 ],
                 'lineOne' => [
                     'required',
-                    'max:'.self::MAX_LINE_LENGTH,
+                    new ValidAddressLine(),
                 ],
                 'lineTwo' => [
                     'nullable',
-                    'string',
-                    'max:'.self::MAX_LINE_LENGTH,
+                    new ValidAddressLine(),
                 ],
             ]
         );
