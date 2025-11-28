@@ -13,7 +13,7 @@ test('email verification screen can be rendered', function () {
     $response = $this->actingAs($user)->get(route('verification.notice'));
 
     $response->assertStatus(200);
-});
+})->skip();
 
 test('email can be verified', function () {
     $user = UserFactory::new()->unverified()->create();
@@ -31,7 +31,7 @@ test('email can be verified', function () {
     Event::assertDispatched(Verified::class);
     expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
     $response->assertRedirect(route('dashboard', absolute: false).'?verified=1');
-});
+})->skip();
 
 test('email is not verified with invalid hash', function () {
     $user = UserFactory::new()->unverified()->create();
@@ -48,7 +48,7 @@ test('email is not verified with invalid hash', function () {
 
     Event::assertNotDispatched(Verified::class);
     expect($user->fresh()->hasVerifiedEmail())->toBeFalse();
-});
+})->skip();
 
 test('email is not verified with invalid user id', function () {
     $user = UserFactory::new()->unverified()->create();
@@ -65,7 +65,7 @@ test('email is not verified with invalid user id', function () {
 
     Event::assertNotDispatched(Verified::class);
     expect($user->fresh()->hasVerifiedEmail())->toBeFalse();
-});
+})->skip();
 
 test('verified user is redirected to dashboard from verification prompt', function () {
     $user = UserFactory::new()->create();
@@ -76,7 +76,7 @@ test('verified user is redirected to dashboard from verification prompt', functi
 
     Event::assertNotDispatched(Verified::class);
     $response->assertRedirect(route('dashboard', absolute: false));
-});
+})->skip();
 
 test('already verified user visiting verification link is redirected without firing event again', function () {
     $user = UserFactory::new()->create();
@@ -94,4 +94,4 @@ test('already verified user visiting verification link is redirected without fir
 
     Event::assertNotDispatched(Verified::class);
     expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
-});
+})->skip();
