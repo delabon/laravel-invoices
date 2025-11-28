@@ -15,7 +15,7 @@ Route::get('/', function () {
 Route::name('register')->group(function () {
     Route::get('/', [Register::class, 'create']);
     Route::post('/', [Register::class, 'store'])
-        ->middleware('guest')
+        ->middleware(['guest', 'throttle:5,1'])
         ->name('.store');
 });
 

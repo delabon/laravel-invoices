@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Rules\ValidAddressLine;
 use App\Rules\ValidCity;
 use App\Rules\ValidCountryCode;
 use App\Rules\ValidName;
 use App\Rules\ValidPassword;
+use App\Rules\ValidPhone;
+use App\Rules\ValidTaxNumber;
+use App\Rules\ValidZip;
 use Database\Factories\UserFactory;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -323,23 +327,117 @@ it('fails with invalid registration data', function (array $invalidData, string 
     'zip with special chars' => [
         [
             'zip' => '9003@',
-        ], 'zip',
+        ],
+        'zip',
         'The zip field format is invalid.',
     ],
-    'zip too long' => [['zip' => str_repeat('1', 21)], 'zip', 'The zip field must not be greater than 20 characters.'],
-    'zip starts with hyphen' => [['zip' => '-9003'], 'zip', 'The zip field format is invalid.'],
-    'zip ends with hyphen' => [['zip' => '9003-'], 'zip', 'The zip field format is invalid.'],
-    'zip single character' => [['zip' => '9'], 'zip', 'The zip field format is invalid.'],
+    'zip too long' => [
+        [
+            'zip' => str_repeat('1', ValidZip::MAX_LENGTH + 1)
+        ],
+        'zip',
+        'The zip field must not be greater than '.ValidZip::MAX_LENGTH.' characters.'
+    ],
+    'zip starts with hyphen' => [
+        [
+            'zip' => '-9003',
+        ],
+        'zip',
+        'The zip field format is invalid.',
+    ],
+    'zip ends with hyphen' => [
+        [
+            'zip' => '9003-',
+        ],
+        'zip',
+        'The zip field format is invalid.',
+    ],
+    'zip single character' => [
+        [
+            'zip' => '9',
+        ],
+        'zip',
+        'The zip field format is invalid.',
+    ],
 
-    'missing lineOne' => [['lineOne' => ''], 'lineOne', 'The line one field is required.'],
-    'lineOne too long' => [['lineOne' => str_repeat('a', 256)], 'lineOne', 'The line one field must not be greater than 255 characters.'],
+    'missing lineOne' => [
+        [
+            'lineOne' => '',
+        ],
+        'lineOne',
+        'The line one field is required.'
+    ],
+    'lineOne too long' => [
+        [
+            'lineOne' => str_repeat('a', ValidAddressLine::MAX_LENGTH + 1),
+        ],
+        'lineOne',
+        'The line one field must not be greater than 255 characters.',
+    ],
 
-    'lineTwo too long' => [['lineTwo' => str_repeat('a', 256)], 'lineTwo', 'The line two field must not be greater than 255 characters.'],
+    'lineTwo too long' => [
+        [
+            'lineTwo' => str_repeat('a', ValidAddressLine::MAX_LENGTH + 1),
+        ],
+        'lineTwo',
+        'The line two field must not be greater than 255 characters.',
+    ],
 
-    'missing phone' => [['phone' => ''], 'phone', 'The phone field is required.'],
-    'phone too long' => [['phone' => str_repeat('1', 21)], 'phone', 'The phone field must not be greater than 20 characters.'],
+    'missing phone' => [
+        [
+            'phone' => '',
+        ],
+        'phone',
+        'The phone field is required.',
+    ],
+    'phone too long' => [
+        [
+            'phone' => str_repeat('1', ValidPhone::MAX_LENGTH + 1),
+        ],
+        'phone',
+        'The phone field must not be greater than 20 characters.',
+    ],
 
-    'missing taxNumber' => [['taxNumber' => ''], 'taxNumber', 'The tax number field is required.'],
-    'taxNumber too long' => [['taxNumber' => str_repeat('a', 51)], 'taxNumber', 'The tax number field must not be greater than 50 characters.'],
+    'missing taxNumber' => [
+        [
+            'taxNumber' => '',
+        ],
+        'taxNumber',
+        'The tax number field is required.',
+    ],
+    'taxNumber too long' => [
+        [
+            'taxNumber' => str_repeat('a', ValidTaxNumber::MAX_LENGTH + 1),
+        ],
+        'taxNumber',
+        'The tax number field must not be greater than 50 characters.',
+    ],
 ]);
 
+it('returns too many requests response when registering more than 5 times', function () {
+    $userData = [
+        'name' => 'Test User',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+        'countryCode' => 'US',
+        'regionCode' => 'US-CA',
+        'city' => 'Los Angeles',
+        'zip' => '9003',
+        'lineOne' => 'Main St 123',
+        'lineTwo' => 'N453',
+        'phone' => '123-4567-567',
+        'taxNumber' => 'TAX-123-456',
+    ];
+
+    for ($i = 1; $i <= 5; $i++){
+        $userData['email'] = 'test'.$i.'@test.com';
+        $this->post(route('register.store'), $userData);
+        auth()->logout();
+        assertDatabaseCount('users', $i);
+    }
+
+    $response = $this->post(route('register.store'), $userData);
+
+    $response->assertTooManyRequests();
+    assertDatabaseCount('users', 5);
+});
