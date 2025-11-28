@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\ValueObjects;
 
-use App\Models\Client;
 use App\Rules\ValidName;
+use App\Rules\ValidPhone;
 use App\Rules\ValidTaxNumber;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
@@ -36,8 +36,7 @@ final readonly class ClientDetails
                 ],
                 'phone' => [
                     'nullable',
-                    'string',
-                    'max:'.Client::PHONE_MAX_LENGTH,
+                    new ValidPhone(),
                 ],
                 'taxNumber' => [
                     'nullable',

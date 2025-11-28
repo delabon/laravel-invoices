@@ -7,6 +7,7 @@ namespace App\ValueObjects;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Rules\ValidName;
+use App\Rules\ValidPhone;
 use App\Rules\ValidTaxNumber;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
@@ -41,8 +42,7 @@ final readonly class UserDetails
                 ],
                 'phone' => [
                     'required',
-                    'string',
-                    'max:'.UserDetail::MAX_PHONE_LENGTH,
+                    new ValidPhone(),
                 ],
             ]
         );

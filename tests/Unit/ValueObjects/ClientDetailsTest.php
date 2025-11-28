@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Models\Client;
+use App\Rules\ValidName;
+use App\Rules\ValidPhone;
 use App\Rules\ValidTaxNumber;
 use App\ValueObjects\Address;
 use App\ValueObjects\ClientDetails;
@@ -102,7 +103,7 @@ dataset('invalid_name_data', [
         'The name field is required.',
     ],
     [
-        str_repeat('a', Client::NAME_MAX_LENGTH + 1), // max length 255
+        str_repeat('a', ValidName::MAX_LENGTH + 1), // max length 255
         'The name field must not be greater than 255 characters.',
     ],
 ]);
@@ -173,7 +174,7 @@ it('fails with invalid tax number data', function (string $invalidTaxNumber, str
 
 dataset('invalid_phone_data', [
     [
-        str_repeat('a', Client::PHONE_MAX_LENGTH + 1), // more than max
+        str_repeat('a', ValidPhone::MAX_LENGTH + 1), // more than max
         'The phone field must not be greater than 20 characters.',
     ],
 ]);

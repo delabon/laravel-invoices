@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Models\Client;
 use App\Models\User;
+use App\Rules\ValidPhone;
+use App\Rules\ValidTaxNumber;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,8 +21,8 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('name');
             $table->jsonb('address');
-            $table->string('tax_number', Client::TAX_NUMBER_MAX_LENGTH)->nullable();
-            $table->string('phone', Client::PHONE_MAX_LENGTH)->nullable();
+            $table->string('tax_number', ValidTaxNumber::MAX_LENGTH)->nullable();
+            $table->string('phone', ValidPhone::MAX_LENGTH)->nullable();
             $table->string('email')->nullable();
             $table->timestamps();
         });

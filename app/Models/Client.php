@@ -11,12 +11,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class Client extends Model
 {
-    public const int NAME_MAX_LENGTH = 255;
-
-    public const int PHONE_MAX_LENGTH = 20;
-
-    public const int TAX_NUMBER_MAX_LENGTH = 50;
-
     protected $fillable = [
         'name',
         'address',
