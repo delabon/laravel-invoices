@@ -130,7 +130,7 @@ dataset('invalid_zip_codes', [
         'The zip field is required.',
     ],
     [
-        str_repeat('a', Address::MAX_ZIP_LENGTH + 1), // max 20 chars
+        str_repeat('a', Address::ZIP_MAX_LENGTH + 1), // max 20 chars
         'The zip field must not be greater than 20 characters.',
     ],
     [
