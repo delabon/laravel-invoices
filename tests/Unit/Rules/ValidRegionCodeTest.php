@@ -6,14 +6,18 @@ use App\Rules\ValidRegionCode;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
 
+it('creates an instance of ValidationRule', function () {
+    $rule = new ValidRegionCode();
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
+});
+
 it('does not fail when a region code is valid', function () {
     $rule = new ValidRegionCode();
 
     $rule->validate('regionCode', 'US-CA', function (string $message) {
         throw new ValidationException($message);
     });
-
-    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_region_codes', [

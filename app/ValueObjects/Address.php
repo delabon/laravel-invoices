@@ -16,12 +16,6 @@ final readonly class Address
 {
     use PropertiesToArray;
 
-    public const int CITY_MAX_LENGTH = 50;
-
-    public const int ZIP_MAX_LENGTH = 20;
-
-    public const int LINE_MAX_LENGTH = 255;
-
     public function __construct(
         public string $countryCode,
         public string $regionCode,

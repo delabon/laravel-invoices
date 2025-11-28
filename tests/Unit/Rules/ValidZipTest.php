@@ -3,9 +3,14 @@
 declare(strict_types=1);
 
 use App\Rules\ValidZip;
-use App\ValueObjects\Address;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
+
+it('creates an instance of ValidationRule', function () {
+    $rule = new ValidZip();
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
+});
 
 it('does not fail when a zip is valid', function () {
     $rule = new ValidZip();
@@ -13,13 +18,11 @@ it('does not fail when a zip is valid', function () {
     $rule->validate('zip', '10001', function (string $message) {
         throw new ValidationException($message);
     });
-
-    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_zip_data', [
     [
-        str_repeat('a', Address::ZIP_MAX_LENGTH + 1), // max 20 chars
+        str_repeat('a', ValidZip::MAX_LENGTH + 1), // max 20 chars
         'The zip field must not be greater than 20 characters.',
     ],
     [

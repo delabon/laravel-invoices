@@ -6,14 +6,18 @@ use App\Rules\ValidName;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
 
+it('creates an instance of ValidationRule', function () {
+    $rule = new ValidName();
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
+});
+
 it('does not fail when a name is valid', function () {
     $rule = new ValidName();
 
     $rule->validate('name', 'John Doe', function (string $message) {
         throw new ValidationException($message);
     });
-
-    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_name_data', [

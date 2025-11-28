@@ -6,14 +6,18 @@ use App\Rules\ValidPassword;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
 
+it('creates an instance of ValidationRule', function () {
+    $rule = new ValidPassword();
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
+});
+
 it('does not fail when a password is valid', function () {
     $rule = new ValidPassword();
 
     $rule->validate('password', '12345678', function (string $message) {
         throw new ValidationException($message);
     });
-
-    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_password_data', [

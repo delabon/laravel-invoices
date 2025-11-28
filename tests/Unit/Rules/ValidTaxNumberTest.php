@@ -6,14 +6,18 @@ use App\Rules\ValidTaxNumber;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
 
+it('creates an instance of ValidationRule', function () {
+    $rule = new ValidTaxNumber();
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
+});
+
 it('does not fail when a tax number is valid', function () {
     $rule = new ValidTaxNumber();
 
     $rule->validate('taxNumber', 'TAX-123-321', function (string $message) {
         throw new ValidationException($message);
     });
-
-    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_tax_number_data', [

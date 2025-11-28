@@ -3,9 +3,14 @@
 declare(strict_types=1);
 
 use App\Rules\ValidCity;
-use App\ValueObjects\Address;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
+
+it('creates an instance of ValidationRule', function () {
+    $rule = new ValidCity();
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
+});
 
 it('does not fail when a city is valid', function () {
     $rule = new ValidCity();
@@ -13,14 +18,12 @@ it('does not fail when a city is valid', function () {
     $rule->validate('city', 'New York', function (string $message) {
         throw new ValidationException($message);
     });
-
-    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_city_data', [
     [
-        str_repeat('a', Address::CITY_MAX_LENGTH + 1), // max 50 chars
-        'The city field must not be greater than '.Address::CITY_MAX_LENGTH.' characters.',
+        str_repeat('a', ValidCity::MAX_LENGTH + 1), // max 50 chars
+        'The city field must not be greater than '.ValidCity::MAX_LENGTH.' characters.',
     ],
 ]);
 

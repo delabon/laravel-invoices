@@ -6,14 +6,18 @@ use App\Rules\ValidPhone;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
 
+it('creates an instance of ValidationRule', function () {
+    $rule = new ValidPhone();
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
+});
+
 it('does not fail when a phone number is valid', function () {
     $rule = new ValidPhone();
 
     $rule->validate('phone', '123-123-321', function (string $message) {
         throw new ValidationException($message);
     });
-
-    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_phone_number_data', [

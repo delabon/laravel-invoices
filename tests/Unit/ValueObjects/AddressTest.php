@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Rules\ValidAddressLine;
+use App\Rules\ValidCity;
 use App\Rules\ValidCountryCode;
 use App\Rules\ValidRegionCode;
+use App\Rules\ValidZip;
 use App\ValueObjects\Address;
 use Illuminate\Validation\ValidationException;
 
@@ -108,7 +111,7 @@ dataset('invalid_city_names', [
         'The city field is required.',
     ],
     [
-        str_repeat('a', Address::CITY_MAX_LENGTH + 1), // max 50 chars
+        str_repeat('a', ValidCity::MAX_LENGTH + 1), // max 50 chars
         'The city field must not be greater than 50 characters.',
     ],
 ]);
@@ -130,7 +133,7 @@ dataset('invalid_zip_codes', [
         'The zip field is required.',
     ],
     [
-        str_repeat('a', Address::ZIP_MAX_LENGTH + 1), // max 20 chars
+        str_repeat('a', ValidZip::MAX_LENGTH + 1), // max 20 chars
         'The zip field must not be greater than 20 characters.',
     ],
     [
@@ -164,7 +167,7 @@ dataset('invalid_line_one_data', [
         'The line one field is required.',
     ],
     [
-        str_repeat('a', Address::LINE_MAX_LENGTH + 1), // max 20 chars
+        str_repeat('a', ValidAddressLine::MAX_LENGTH + 1), // max 20 chars
         'The line one field must not be greater than 255 characters.',
     ],
 ]);
@@ -182,7 +185,7 @@ it('fails with invalid line one address', function (string $invalidLineOne, stri
 
 dataset('invalid_line_two_data', [
     [
-        str_repeat('a', Address::LINE_MAX_LENGTH + 1), // max 20 chars
+        str_repeat('a', ValidAddressLine::MAX_LENGTH + 1), // max 20 chars
         'The line two field must not be greater than 255 characters.',
     ],
 ]);
