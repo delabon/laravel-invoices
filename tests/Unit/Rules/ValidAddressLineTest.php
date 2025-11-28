@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use App\Rules\ValidAddressLine;
-use App\Rules\ValidZip;
 use App\ValueObjects\Address;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
 
 it('does not fail when an address line is valid', function () {
@@ -13,6 +13,8 @@ it('does not fail when an address line is valid', function () {
     $rule->validate('line one', 'Main St 123', function (string $message) {
         throw new ValidationException($message);
     });
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_address_line_data', [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Rules\ValidCity;
 use App\ValueObjects\Address;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
 
 it('does not fail when a city is valid', function () {
@@ -12,6 +13,8 @@ it('does not fail when a city is valid', function () {
     $rule->validate('city', 'New York', function (string $message) {
         throw new ValidationException($message);
     });
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_city_data', [

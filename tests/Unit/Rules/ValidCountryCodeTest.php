@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Rules\ValidCountryCode;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
 
 it('does not fail when a country code is valid', function () {
@@ -11,6 +12,8 @@ it('does not fail when a country code is valid', function () {
     $rule->validate('countryCode', 'US', function (string $message) {
         throw new ValidationException($message);
     });
+
+    expect($rule)->toBeInstanceOf(ValidationRule::class);
 })->throwsNoExceptions();
 
 dataset('invalid_country_codes', [
