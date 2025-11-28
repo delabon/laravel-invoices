@@ -6,6 +6,7 @@ namespace App\ValueObjects;
 
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Rules\ValidName;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
@@ -27,8 +28,7 @@ final readonly class UserDetails
             [
                 'name' => [
                     'required',
-                    'string',
-                    'max:'.User::MAX_NAME_LENGTH,
+                    new ValidName(),
                 ],
                 'email' => [
                     'required',

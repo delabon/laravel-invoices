@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
 use App\Models\UserDetail;
+use App\Rules\ValidName;
 use App\ValueObjects\Address;
 use App\ValueObjects\UserDetails;
 use Database\Factories\UserDetailFactory;
@@ -122,7 +122,7 @@ dataset('invalid_name_data', [
         'The name field is required.',
     ],
     [
-        str_repeat('a', User::MAX_NAME_LENGTH + 1), // max length 255
+        str_repeat('a', ValidName::MAX_LENGTH + 1), // larger than max
         'The name field must not be greater than 255 characters.',
     ],
 ]);

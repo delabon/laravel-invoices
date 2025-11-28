@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\ValueObjects;
 
 use App\Models\Client;
+use App\Rules\ValidName;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
@@ -26,8 +27,7 @@ final readonly class ClientDetails
             [
                 'name' => [
                     'required',
-                    'string',
-                    'max:'.Client::NAME_MAX_LENGTH,
+                    new ValidName(),
                 ],
                 'email' => [
                     'nullable',

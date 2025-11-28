@@ -14,7 +14,9 @@ final class User extends Authenticatable
 {
     use Notifiable;
 
-    public const int MAX_NAME_LENGTH = 255;
+    public const int PASSWORD_MIN_LENGTH = 8;
+
+    public const int PASSWORD_MAX_LENGTH = 255;
 
     /**
      * The attributes that are mass assignable.
