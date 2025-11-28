@@ -108,7 +108,7 @@ dataset('invalid_city_names', [
         'The city field is required.',
     ],
     [
-        str_repeat('a', Address::MAX_CITY_LENGTH + 1), // max 50 chars
+        str_repeat('a', Address::CITY_MAX_LENGTH + 1), // max 50 chars
         'The city field must not be greater than 50 characters.',
     ],
 ]);

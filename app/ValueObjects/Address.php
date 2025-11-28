@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace App\ValueObjects;
 
-use App\Models\Region;
 use App\Rules\ValidCountryCode;
 use App\Rules\ValidRegionCode;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 final readonly class Address
 {
     use PropertiesToArray;
 
-    public const int MAX_CITY_LENGTH = 50;
+    public const int CITY_MAX_LENGTH = 50;
 
     public const int MAX_ZIP_LENGTH = 20;
 
@@ -42,7 +40,7 @@ final readonly class Address
                 ],
                 'city' => [
                     'required',
-                    'max:'.self::MAX_CITY_LENGTH,
+                    'max:'.self::CITY_MAX_LENGTH,
                 ],
                 'zip' => [
                     'required',
