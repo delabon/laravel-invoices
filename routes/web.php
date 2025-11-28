@@ -2,15 +2,25 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Register;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
+        'canRegister' => true,
     ]);
 })->name('home');
+
+Route::name('register')->group(function () {
+    Route::get('/', [Register::class, 'create']);
+    Route::post('/', [Register::class, 'store'])
+        ->middleware('guest')
+        ->name('.store');
+});
+
+Route::get('login', function () {})
+    ->name('login');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
