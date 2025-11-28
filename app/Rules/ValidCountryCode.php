@@ -10,6 +10,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 final class ValidCountryCode implements ValidationRule
 {
+    public const int CODE_LENGTH = 2;
+
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (! is_string($value)) {
@@ -18,8 +20,8 @@ final class ValidCountryCode implements ValidationRule
             return;
         }
 
-        if (strlen($value) !== Country::CODE_LENGTH) {
-            $fail('The :attribute field must be '.Country::CODE_LENGTH.' characters.');
+        if (strlen($value) !== self::CODE_LENGTH) {
+            $fail('The :attribute field must be '.self::CODE_LENGTH.' characters.');
 
             return;
         }

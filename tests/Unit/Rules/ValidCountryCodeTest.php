@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Country;
 use App\Rules\ValidCountryCode;
 use Illuminate\Validation\ValidationException;
 
@@ -16,11 +15,11 @@ it('does not fail when a country code is valid', function () {
 
 dataset('invalid_country_codes', [
     [
-        str_repeat('U', Country::CODE_LENGTH - 1), // min 2 chars
+        str_repeat('U', ValidCountryCode::CODE_LENGTH - 1), // min 2 chars
         'The country code field must be 2 characters.',
     ],
     [
-        str_repeat('U', Country::CODE_LENGTH + 1), // max 2 chars
+        str_repeat('U', ValidCountryCode::CODE_LENGTH + 1), // max 2 chars
         'The country code field must be 2 characters.',
     ],
     [
