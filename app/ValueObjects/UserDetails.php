@@ -7,6 +7,7 @@ namespace App\ValueObjects;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Rules\ValidName;
+use App\Rules\ValidTaxNumber;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
@@ -36,8 +37,7 @@ final readonly class UserDetails
                 ],
                 'taxNumber' => [
                     'required',
-                    'string',
-                    'max:'.UserDetail::MAX_TAX_NUMBER_LENGTH,
+                    new ValidTaxNumber(),
                 ],
                 'phone' => [
                     'required',

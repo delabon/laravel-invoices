@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\UserDetail;
 use App\Rules\ValidName;
+use App\Rules\ValidTaxNumber;
 use App\ValueObjects\Address;
 use App\ValueObjects\UserDetails;
 use Database\Factories\UserDetailFactory;
@@ -186,7 +187,7 @@ dataset('invalid_tax_number_data', [
         'The tax number field is required.',
     ],
     [
-        str_repeat('a', UserDetail::MAX_TAX_NUMBER_LENGTH + 1), // more than max
+        str_repeat('a', ValidTaxNumber::MAX_LENGTH + 1), // more than max
         'The tax number field must not be greater than 50 characters.',
     ],
 ]);

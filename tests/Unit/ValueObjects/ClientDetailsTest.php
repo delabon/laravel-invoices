@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Client;
+use App\Rules\ValidTaxNumber;
 use App\ValueObjects\Address;
 use App\ValueObjects\ClientDetails;
 use Illuminate\Validation\ValidationException;
@@ -148,7 +149,7 @@ it('fails with invalid email data', function (string $invalidEmail, string $expe
 
 dataset('invalid_tax_number_data', [
     [
-        str_repeat('a', Client::TAX_NUMBER_MAX_LENGTH + 1), // more than max
+        str_repeat('a', ValidTaxNumber::MAX_LENGTH + 1), // more than max
         'The tax number field must not be greater than 50 characters.',
     ],
 ]);
