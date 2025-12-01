@@ -22,7 +22,8 @@ final class ProfileController extends Controller
     {
         return Inertia::render('settings/Profile', [
             /** @phpstan-ignore instanceof.alwaysFalse */
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            // 'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'mustVerifyEmail' => false,
             'status' => $request->session()->get('status'),
         ]);
     }

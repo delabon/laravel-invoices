@@ -16,11 +16,13 @@ Route::prefix('register')->name('register')->group(function () {
         ->name('.store');
 });
 
-Route::get('login', function () {})
+Route::inertia('login', 'auth/Login')
     ->name('login');
+Route::post('login', function () {})
+    ->name('login.store');
+Route::get('logout', function () {})
+    ->name('logout');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-require __DIR__.'/settings.php';
