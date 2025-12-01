@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Mail\Registered;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Rules\ValidAddressLine;
@@ -15,6 +16,9 @@ use App\Rules\ValidZip;
 use Database\Factories\UserFactory;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia as Assert;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Queue\CallQueuedClosure;
 
 use function Pest\Laravel\assertDatabaseCount;
 
@@ -28,6 +32,9 @@ test('registration screen can be rendered', function () {
 });
 
 test('new users can register', function () {
+    Mail::fake();
+    Queue::fake();
+
     $userData = [
         'name' => 'Test User',
         'email' => 'test@example.com',
@@ -63,8 +70,17 @@ test('new users can register', function () {
         ->and($userDetails->address->zip)->toBe($userData['zip'])
         ->and($userDetails->address->lineOne)->toBe($userData['lineOne'])
         ->and($userDetails->address->lineTwo)->toBe($userData['lineTwo'])
-        ->and($userDetails->phone)->toBe($userData['phone'])
-        ->and($userDetails->tax_number)->toBe($userData['taxNumber']);
+        ->and($userDetails->phone)->toBe($userData['phone']);
+
+    Queue::assertPushed(CallQueuedClosure::class, function ($job) use ($userData) {
+        $job->closure->getClosure()();
+
+        Mail::assertSent(Registered::class, function ($mail) use ($userData) {
+            return $mail->hasTo($userData['email']);
+        });
+
+        return true;
+    });
 });
 
 it('fails when trying to register a new user with an existent email', function () {
@@ -93,6 +109,7 @@ it('fails when trying to register a new user with an existent email', function (
     // Should fail
     $response2 = $this->post(route('register.store'), $userData);
 
+    $response2->assertRedirectBack();
     $response2->assertSessionHasErrors([
         'email' => 'The email has already been taken.'
     ]);

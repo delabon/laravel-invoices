@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Mail\Registered;
 use App\Models\User;
 use App\ValueObjects\Address;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Throwable;
@@ -55,6 +57,11 @@ final class Register extends Controller
         }
 
         Auth::login($user);
+
+        dispatch(function () use ($user){
+            Mail::to($user->email)
+                ->sendNow(new Registered($user));
+        });
 
         return redirect(route('dashboard'));
     }
