@@ -70,7 +70,8 @@ test('new users can register', function () {
         ->and($userDetails->address->zip)->toBe($userData['zip'])
         ->and($userDetails->address->lineOne)->toBe($userData['lineOne'])
         ->and($userDetails->address->lineTwo)->toBe($userData['lineTwo'])
-        ->and($userDetails->phone)->toBe($userData['phone']);
+        ->and($userDetails->phone)->toBe($userData['phone'])
+        ->and($userDetails->tax_number)->toBe($userData['taxNumber']);
 
     Queue::assertPushed(CallQueuedClosure::class, function ($job) use ($userData) {
         $job->closure->getClosure()();
