@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Throwable;
 
-final class Register extends Controller
+final class RegisterController extends Controller
 {
     public function create(): InertiaResponse
     {

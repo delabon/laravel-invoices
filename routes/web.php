@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Register;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -10,8 +10,8 @@ Route::inertia('/', 'Welcome')
     ->name('home');
 
 Route::prefix('register')->name('register')->group(function () {
-    Route::get('/', [Register::class, 'create']);
-    Route::post('/', [Register::class, 'store'])
+    Route::get('/', [RegisterController::class, 'create']);
+    Route::post('/', [RegisterController::class, 'store'])
         ->middleware(['guest', 'throttle:5,1'])
         ->name('.store');
 });
