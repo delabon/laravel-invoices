@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\DTOs\NewUserDTO;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use App\Rules\ValidAddressLine;
@@ -87,4 +88,43 @@ it('returns the correct rules', function () {
             new ValidTaxNumber(),
         ],
     ]);
+});
+
+test('toDto method returns a new instance of NewUserDto', function () {
+    $request = new StoreUserRequest();
+    $request->setRouteResolver(function () {
+        return new class {
+            public function parameter(string $key): mixed
+            {
+                return match ($key) {
+                    'name' => 'Test User',
+                    'email' => 'test@example.com',
+                    'password' => 'password',
+                    'countryCode' => 'US',
+                    'regionCode' => 'US-CA',
+                    'city' => 'Los Angeles',
+                    'zip' => '9003',
+                    'lineOne' => 'Main St 123',
+                    'lineTwo' => 'N453',
+                    'phone' => '123-4567-567',
+                    'taxNumber' => 'TAX-123-456',
+                };
+            }
+        };
+    });
+
+    $dto = $request->toDto();
+
+    expect($dto)->toBeInstanceOf(NewUserDTO::Class)
+        ->and($dto->name)->toBe('Test User')
+        ->and($dto->email)->toBe('test@example.com')
+        ->and($dto->password)->toBe('password')
+        ->and($dto->countryCode)->toBe('US')
+        ->and($dto->regionCode)->toBe('US-CA')
+        ->and($dto->city)->toBe('Los Angeles')
+        ->and($dto->zip)->toBe('9003')
+        ->and($dto->lineOne)->toBe('Main St 123')
+        ->and($dto->lineTwo)->toBe('N453')
+        ->and($dto->phone)->toBe('123-4567-567')
+        ->and($dto->taxNumber)->toBe('TAX-123-456');
 });

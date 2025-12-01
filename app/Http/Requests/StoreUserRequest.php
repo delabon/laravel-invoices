@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\DTOs\NewUserDTO;
 use App\Models\User;
 use App\Rules\ValidAddressLine;
 use App\Rules\ValidCity;
@@ -85,5 +86,22 @@ final class StoreUserRequest extends FormRequest
                 new ValidTaxNumber(),
             ],
         ];
+    }
+
+    public function toDto(): NewUserDTO
+    {
+        return new NewUserDTO(
+            name: $this->name,
+            email: $this->email,
+            password: $this->password,
+            phone: $this->phone,
+            taxNumber: $this->taxNumber,
+            countryCode: $this->countryCode,
+            regionCode: $this->regionCode,
+            city: $this->city,
+            zip: $this->zip,
+            lineOne: $this->lineOne,
+            lineTwo: $this->lineTwo
+        );
     }
 }
