@@ -9,12 +9,12 @@ use Inertia\Inertia;
 Route::inertia('/', 'Welcome')
     ->name('home');
 
-Route::prefix('register')->group(function () {
+Route::prefix('register')->name('register')->group(function () {
     Route::get('/', [Register::class, 'create']);
     Route::post('/', [Register::class, 'store'])
         ->middleware(['guest', 'throttle:5,1'])
         ->name('.store');
-})->name('register');
+});
 
 Route::get('login', function () {})
     ->name('login');
