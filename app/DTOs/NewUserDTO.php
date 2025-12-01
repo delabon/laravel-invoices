@@ -18,6 +18,5 @@ final readonly class NewUserDTO
         public string $zip,
         public string $lineOne,
         public ?string $lineTwo = null
-    ) {
-    }
+    ) {}
 }

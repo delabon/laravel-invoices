@@ -14,8 +14,8 @@ use App\Rules\ValidPhone;
 use App\Rules\ValidRegionCode;
 use App\Rules\ValidTaxNumber;
 use App\Rules\ValidZip;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 it('is an instance of FormRequest', function () {
     $request = new StoreUserRequest();
@@ -93,7 +93,8 @@ it('returns the correct rules', function () {
 test('toDto method returns a new instance of NewUserDto', function () {
     $request = new StoreUserRequest();
     $request->setRouteResolver(function () {
-        return new class {
+        return new class
+        {
             public function parameter(string $key): mixed
             {
                 return match ($key) {
@@ -115,7 +116,7 @@ test('toDto method returns a new instance of NewUserDto', function () {
 
     $dto = $request->toDto();
 
-    expect($dto)->toBeInstanceOf(NewUserDTO::Class)
+    expect($dto)->toBeInstanceOf(NewUserDTO::class)
         ->and($dto->name)->toBe('Test User')
         ->and($dto->email)->toBe('test@example.com')
         ->and($dto->password)->toBe('password')

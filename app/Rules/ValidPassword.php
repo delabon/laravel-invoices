@@ -21,13 +21,13 @@ final class ValidPassword implements ValidationRule
             return;
         }
 
-        if (strlen($value) < self::MIN_LENGTH) {
+        if (mb_strlen($value) < self::MIN_LENGTH) {
             $fail('The :attribute field must be at least '.self::MIN_LENGTH.' characters.');
 
             return;
         }
 
-        if (strlen($value) > self::MAX_LENGTH) {
+        if (mb_strlen($value) > self::MAX_LENGTH) {
             $fail('The :attribute field must not be greater than '.self::MAX_LENGTH.' characters.');
         }
     }

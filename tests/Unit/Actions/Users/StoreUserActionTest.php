@@ -85,7 +85,7 @@ it('creates a new user with a null address line two', function () {
 
 it('fails when trying to create a new user with an existent email', function () {
     UserFactory::new()->create([
-        'email' => 'mike@test.com'
+        'email' => 'mike@test.com',
     ]);
     $action = new StoreUserAction();
 

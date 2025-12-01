@@ -14,11 +14,11 @@ use App\Rules\ValidPhone;
 use App\Rules\ValidTaxNumber;
 use App\Rules\ValidZip;
 use Database\Factories\UserFactory;
+use Illuminate\Queue\CallQueuedClosure;
 use Illuminate\Support\Facades\Hash;
-use Inertia\Testing\AssertableInertia as Assert;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
-use Illuminate\Queue\CallQueuedClosure;
+use Inertia\Testing\AssertableInertia as Assert;
 
 use function Pest\Laravel\assertDatabaseCount;
 
@@ -112,7 +112,7 @@ it('fails when trying to register a new user with an existent email', function (
 
     $response2->assertRedirectBack();
     $response2->assertSessionHasErrors([
-        'email' => 'The email has already been taken.'
+        'email' => 'The email has already been taken.',
     ]);
 
     assertDatabaseCount('users', 1);
@@ -167,7 +167,7 @@ it('fails with invalid registration data', function (array $invalidData, string 
     $response = $this->post(route('register.store'), $testData);
 
     $response->assertSessionHasErrors([
-        $errorField => $expectedErrorMessage
+        $errorField => $expectedErrorMessage,
     ]);
     $this->assertGuest();
     assertDatabaseCount('users', 0);
@@ -181,7 +181,7 @@ it('fails with invalid registration data', function (array $invalidData, string 
     ],
     'name too long' => [
         [
-            'name' => str_repeat('a', ValidName::MAX_LENGTH + 1)
+            'name' => str_repeat('a', ValidName::MAX_LENGTH + 1),
         ],
         'name',
         'The name field must not be greater than '.ValidName::MAX_LENGTH.' characters.',
@@ -257,10 +257,10 @@ it('fails with invalid registration data', function (array $invalidData, string 
 
     'missing countryCode' => [
         [
-            'countryCode' => ''
+            'countryCode' => '',
         ],
         'countryCode',
-        'The country code field is required.'
+        'The country code field is required.',
     ],
     'invalid countryCode format' => [
         [
@@ -351,10 +351,10 @@ it('fails with invalid registration data', function (array $invalidData, string 
     ],
     'zip too long' => [
         [
-            'zip' => str_repeat('1', ValidZip::MAX_LENGTH + 1)
+            'zip' => str_repeat('1', ValidZip::MAX_LENGTH + 1),
         ],
         'zip',
-        'The zip field must not be greater than '.ValidZip::MAX_LENGTH.' characters.'
+        'The zip field must not be greater than '.ValidZip::MAX_LENGTH.' characters.',
     ],
     'zip starts with hyphen' => [
         [
@@ -383,7 +383,7 @@ it('fails with invalid registration data', function (array $invalidData, string 
             'lineOne' => '',
         ],
         'lineOne',
-        'The line one field is required.'
+        'The line one field is required.',
     ],
     'lineOne too long' => [
         [
@@ -447,7 +447,7 @@ it('returns too many requests response when registering more than 5 times', func
         'taxNumber' => 'TAX-123-456',
     ];
 
-    for ($i = 1; $i <= 5; $i++){
+    for ($i = 1; $i <= 5; ++$i) {
         $userData['email'] = 'test'.$i.'@test.com';
         $this->post(route('register.store'), $userData);
         auth()->logout();

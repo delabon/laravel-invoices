@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Rules\ValidAddressLine;
-use App\ValueObjects\Address;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\ValidationException;
 

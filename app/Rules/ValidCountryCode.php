@@ -20,7 +20,7 @@ final class ValidCountryCode implements ValidationRule
             return;
         }
 
-        if (strlen($value) !== self::CODE_LENGTH) {
+        if (mb_strlen($value) !== self::CODE_LENGTH) {
             $fail('The :attribute field must be '.self::CODE_LENGTH.' characters.');
 
             return;

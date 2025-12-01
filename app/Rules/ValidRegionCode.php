@@ -22,14 +22,14 @@ final class ValidRegionCode implements ValidationRule
             return;
         }
 
-        if (strlen($value) < self::CODE_MIN_LENGTH) {
+        if (mb_strlen($value) < self::CODE_MIN_LENGTH) {
             $fail('The :attribute field must be at least '.self::CODE_MIN_LENGTH.' characters.');
 
             return;
         }
 
-        if (strlen($value) > ValidRegionCode::CODE_MAX_LENGTH) {
-            $fail('The :attribute field must not be greater than '.ValidRegionCode::CODE_MAX_LENGTH.' characters.');
+        if (mb_strlen($value) > self::CODE_MAX_LENGTH) {
+            $fail('The :attribute field must not be greater than '.self::CODE_MAX_LENGTH.' characters.');
 
             return;
         }

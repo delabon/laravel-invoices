@@ -19,7 +19,7 @@ final class ValidPhone implements ValidationRule
             return;
         }
 
-        if (strlen($value) > self::MAX_LENGTH) {
+        if (mb_strlen($value) > self::MAX_LENGTH) {
             $fail('The :attribute field must not be greater than '.self::MAX_LENGTH.' characters.');
         }
     }

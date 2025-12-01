@@ -48,13 +48,13 @@ final class StoreUserAction
 
             Auth::login($user);
 
-            dispatch(function () use ($user){
+            dispatch(function () use ($user) {
                 Mail::to($user->email)
                     ->sendNow(new Registered($user));
             });
 
             return $user;
-        } catch (Exception $e) {
+        } catch (Exception) {
             DB::rollBack();
 
             throw new RuntimeException('Register has been failed. Please try again later.');
