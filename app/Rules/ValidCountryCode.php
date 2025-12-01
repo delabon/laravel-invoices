@@ -43,6 +43,7 @@ final class ValidCountryCode implements ValidationRule
             $code,
             Country::query()
                 ->pluck('code_2')
+                /** @phpstan-ignore argument.type */
                 ->map(static fn (string $code) => mb_strtoupper($code))
                 ->all()
         );

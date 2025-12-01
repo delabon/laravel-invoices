@@ -51,6 +51,7 @@ final class ValidRegionCode implements ValidationRule
             $code,
             Region::query()
                 ->pluck('code')
+                /** @phpstan-ignore argument.type */
                 ->map(static fn (string $code) => mb_strtoupper($code))
                 ->all()
         );

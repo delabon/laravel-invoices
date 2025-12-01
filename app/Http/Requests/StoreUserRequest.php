@@ -91,17 +91,19 @@ final class StoreUserRequest extends FormRequest
     public function toDto(): NewUserDTO
     {
         return new NewUserDTO(
-            name: $this->name,
-            email: $this->email,
-            password: $this->password,
-            phone: $this->phone,
-            taxNumber: $this->taxNumber,
-            countryCode: $this->countryCode,
-            regionCode: $this->regionCode,
-            city: $this->city,
-            zip: $this->zip,
-            lineOne: $this->lineOne,
-            lineTwo: $this->lineTwo
+            name: $this->string('name')->value(),
+            email: $this->string('email')->value(),
+            password: $this->string('password')->value(),
+            phone: $this->string('phone')->value(),
+            taxNumber: $this->string('taxNumber')->value(),
+            countryCode: $this->string('countryCode')->value(),
+            regionCode: $this->string('regionCode')->value(),
+            city: $this->string('city')->value(),
+            zip: $this->string('zip')->value(),
+            lineOne: $this->string('lineOne')->value(),
+            lineTwo: is_string($this->lineTwo)
+                ? $this->lineTwo
+                : null
         );
     }
 }

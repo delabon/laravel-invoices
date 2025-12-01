@@ -92,27 +92,19 @@ it('returns the correct rules', function () {
 
 test('toDto method returns a new instance of NewUserDto', function () {
     $request = new StoreUserRequest();
-    $request->setRouteResolver(function () {
-        return new class
-        {
-            public function parameter(string $key): mixed
-            {
-                return match ($key) {
-                    'name' => 'Test User',
-                    'email' => 'test@example.com',
-                    'password' => 'password',
-                    'countryCode' => 'US',
-                    'regionCode' => 'US-CA',
-                    'city' => 'Los Angeles',
-                    'zip' => '9003',
-                    'lineOne' => 'Main St 123',
-                    'lineTwo' => 'N453',
-                    'phone' => '123-4567-567',
-                    'taxNumber' => 'TAX-123-456',
-                };
-            }
-        };
-    });
+    $request->replace([
+        'name' => 'Test User',
+        'email' => 'test@example.com',
+        'password' => 'password',
+        'countryCode' => 'US',
+        'regionCode' => 'US-CA',
+        'city' => 'Los Angeles',
+        'zip' => '9003',
+        'lineOne' => 'Main St 123',
+        'lineTwo' => 'N453',
+        'phone' => '123-4567-567',
+        'taxNumber' => 'TAX-123-456',
+    ]);
 
     $dto = $request->toDto();
 
