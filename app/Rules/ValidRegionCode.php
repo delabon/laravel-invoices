@@ -7,6 +7,7 @@ namespace App\Rules;
 use App\Models\Region;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Facades\Cache;
 
 final class ValidRegionCode implements ValidationRule
 {
@@ -49,11 +50,13 @@ final class ValidRegionCode implements ValidationRule
     {
         return in_array(
             $code,
-            Region::query()
-                ->pluck('code')
-                /** @phpstan-ignore argument.type */
-                ->map(static fn (string $code) => mb_strtoupper($code))
-                ->all()
+            Cache::remember('region_codes', now()->addMonth(), function () {
+                return Region::query()
+                    ->pluck('code')
+                    /** @phpstan-ignore argument.type */
+                    ->map(static fn (string $code) => mb_strtoupper($code))
+                    ->all();
+            })
         );
     }
 }
