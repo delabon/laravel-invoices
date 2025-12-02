@@ -42,6 +42,7 @@ final class ValidCountryCode implements ValidationRule
     {
         return in_array(
             $code,
+            /** @phpstan-ignore argument.type */
             Cache::remember('country_codes', now()->addMonth(), function () {
                 return Country::query()
                     ->pluck('code_2')

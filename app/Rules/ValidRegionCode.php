@@ -50,6 +50,7 @@ final class ValidRegionCode implements ValidationRule
     {
         return in_array(
             $code,
+            /** @phpstan-ignore argument.type */
             Cache::remember('region_codes', now()->addMonth(), function () {
                 return Region::query()
                     ->pluck('code')
