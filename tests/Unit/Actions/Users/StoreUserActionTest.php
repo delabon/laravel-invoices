@@ -101,5 +101,5 @@ it('fails when trying to create a new user with an existent email', function () 
         zip: '10001',
         lineOne: '123 Main St',
         lineTwo: null,
-    )))->toThrow(RuntimeException::class, 'Register has been failed. Please try again later.');
+    )))->toThrow(RuntimeException::class, 'Registration failed. Please try again later.');
 });

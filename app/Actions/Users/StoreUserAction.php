@@ -58,7 +58,7 @@ final class StoreUserAction
             DB::rollBack();
 
             throw new RuntimeException(
-                message: 'Register has been failed. Please try again later.',
+                message: 'Registration failed. Please try again later.',
                 previous: $e
             );
         }
