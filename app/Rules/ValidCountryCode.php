@@ -7,6 +7,7 @@ namespace App\Rules;
 use App\Models\Country;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Facades\Cache;
 
 final class ValidCountryCode implements ValidationRule
 {
@@ -41,11 +42,14 @@ final class ValidCountryCode implements ValidationRule
     {
         return in_array(
             $code,
-            Country::query()
-                ->pluck('code_2')
-                /** @phpstan-ignore argument.type */
-                ->map(static fn (string $code) => mb_strtoupper($code))
-                ->all()
+            /** @phpstan-ignore argument.type */
+            Cache::remember('country_codes', now()->addMonth(), function () {
+                return Country::query()
+                    ->pluck('code_2')
+                    /** @phpstan-ignore argument.type */
+                    ->map(static fn (string $code) => mb_strtoupper($code))
+                    ->all();
+            })
         );
     }
 }

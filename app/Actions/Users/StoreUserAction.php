@@ -8,7 +8,6 @@ use App\DTOs\NewUserDTO;
 use App\Mail\Registered;
 use App\Models\User;
 use App\ValueObjects\Address;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -54,10 +53,13 @@ final class StoreUserAction
             });
 
             return $user;
-        } catch (Exception) {
+        } catch (Throwable $e) {
             DB::rollBack();
 
-            throw new RuntimeException('Register has been failed. Please try again later.');
+            throw new RuntimeException(
+                message: 'Registration failed. Please try again later.',
+                previous: $e
+            );
         }
     }
 }

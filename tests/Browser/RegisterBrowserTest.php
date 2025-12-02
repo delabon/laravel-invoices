@@ -67,6 +67,6 @@ test('guest can see error message when there is one', function () {
         ->type('lineTwo', 'N97')
         ->click('Create account')
         ->wait(1)
-        ->assertSee('The password confirmation field confirmation does not match.')
+        ->assertSee('The password field confirmation does not match.')
         ->assertDontSee('Dashboard');
 });

@@ -101,5 +101,5 @@ it('fails when trying to register a user with an existent email', function () {
 
     expect($response)->toBeInstanceOf(Response::class)
         ->and($response->getStatusCode())->toBe(Response::HTTP_INTERNAL_SERVER_ERROR)
-        ->and($response->getContent())->toBe('Register has been failed. Please try again later.');
+        ->and($response->getContent())->toBe('Registration failed. Please try again later.');
 });

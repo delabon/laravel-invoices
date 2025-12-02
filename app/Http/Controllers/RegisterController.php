@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Actions\Users\StoreUserAction;
 use App\Http\Requests\StoreUserRequest;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Inertia\Inertia;
@@ -29,7 +28,7 @@ final class RegisterController extends Controller
             $action->execute($request->toDto());
 
             return redirect(route('dashboard'));
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
