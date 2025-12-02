@@ -223,6 +223,20 @@ it('fails with invalid registration data', function (array $invalidData, string 
         'password',
         'The password field is required.',
     ],
+    'missing password confirmation' => [
+        [
+            'password_confirmation' => '',
+        ],
+        'password',
+        'The password field confirmation does not match.',
+    ],
+    'password confirmation mismatch' => [
+        [
+            'password_confirmation' => 'different',
+        ],
+        'password',
+        'The password field confirmation does not match.',
+    ],
     'password too short' => [
         [
             'password' => str_repeat('b', ValidPassword::MIN_LENGTH - 1),
@@ -238,21 +252,6 @@ it('fails with invalid registration data', function (array $invalidData, string 
         ],
         'password',
         'The password field must not be greater than 255 characters.',
-    ],
-
-    'missing password confirmation' => [
-        [
-            'password_confirmation' => '',
-        ],
-        'password_confirmation',
-        'The password confirmation field is required.',
-    ],
-    'password confirmation mismatch' => [
-        [
-            'password_confirmation' => 'different',
-        ],
-        'password_confirmation',
-        'The password confirmation field confirmation does not match.',
     ],
 
     'missing countryCode' => [

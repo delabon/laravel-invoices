@@ -47,11 +47,8 @@ final class StoreUserRequest extends FormRequest
             ],
             'password' => [
                 'required',
+                'confirmed',
                 new ValidPassword(),
-            ],
-            'password_confirmation' => [
-                'required',
-                'confirmed:password',
             ],
             'countryCode' => [
                 'required',

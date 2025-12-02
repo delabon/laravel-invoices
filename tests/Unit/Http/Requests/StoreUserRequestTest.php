@@ -49,11 +49,8 @@ it('returns the correct rules', function () {
         ],
         'password' => [
             'required',
+            'confirmed',
             new ValidPassword(),
-        ],
-        'password_confirmation' => [
-            'required',
-            'confirmed:password',
         ],
         'countryCode' => [
             'required',
