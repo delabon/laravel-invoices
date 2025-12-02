@@ -7,8 +7,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Requests\StoreUserRequest;
 use Database\Factories\UserFactory;
 use Illuminate\Http\RedirectResponse;
-use Inertia\Response as InertiaResponse;
 use Illuminate\Http\Response;
+use Inertia\Response as InertiaResponse;
 
 use function Pest\Laravel\assertDatabaseCount;
 
