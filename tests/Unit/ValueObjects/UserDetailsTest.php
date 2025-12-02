@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
-use App\Models\UserDetail;
+use App\Rules\ValidName;
+use App\Rules\ValidPhone;
+use App\Rules\ValidTaxNumber;
 use App\ValueObjects\Address;
 use App\ValueObjects\UserDetails;
 use Database\Factories\UserDetailFactory;
@@ -122,7 +123,7 @@ dataset('invalid_name_data', [
         'The name field is required.',
     ],
     [
-        str_repeat('a', User::MAX_NAME_LENGTH + 1), // max length 255
+        str_repeat('a', ValidName::MAX_LENGTH + 1), // larger than max
         'The name field must not be greater than 255 characters.',
     ],
 ]);
@@ -186,7 +187,7 @@ dataset('invalid_tax_number_data', [
         'The tax number field is required.',
     ],
     [
-        str_repeat('a', UserDetail::MAX_TAX_NUMBER_LENGTH + 1), // more than max
+        str_repeat('a', ValidTaxNumber::MAX_LENGTH + 1), // more than max
         'The tax number field must not be greater than 50 characters.',
     ],
 ]);
@@ -216,7 +217,7 @@ dataset('invalid_phone_data', [
         'The phone field is required.',
     ],
     [
-        str_repeat('a', UserDetail::MAX_PHONE_LENGTH + 1), // more than max
+        str_repeat('a', ValidPhone::MAX_LENGTH + 1), // more than max
         'The phone field must not be greater than 20 characters.',
     ],
 ]);

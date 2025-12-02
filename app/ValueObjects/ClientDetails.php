@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\ValueObjects;
 
-use App\Models\Client;
+use App\Rules\ValidName;
+use App\Rules\ValidPhone;
+use App\Rules\ValidTaxNumber;
 use App\Traits\PropertiesToArray;
 use Illuminate\Support\Facades\Validator;
 use InvalidArgumentException;
@@ -26,8 +28,7 @@ final readonly class ClientDetails
             [
                 'name' => [
                     'required',
-                    'string',
-                    'max:'.Client::NAME_MAX_LENGTH,
+                    new ValidName(),
                 ],
                 'email' => [
                     'nullable',
@@ -35,13 +36,11 @@ final readonly class ClientDetails
                 ],
                 'phone' => [
                     'nullable',
-                    'string',
-                    'max:'.Client::PHONE_MAX_LENGTH,
+                    new ValidPhone(),
                 ],
                 'taxNumber' => [
                     'nullable',
-                    'string',
-                    'max:'.Client::TAX_NUMBER_MAX_LENGTH,
+                    new ValidTaxNumber(),
                 ],
             ]
         );

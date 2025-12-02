@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Models\Country;
-use App\Models\Region;
+use App\Rules\ValidAddressLine;
+use App\Rules\ValidCity;
+use App\Rules\ValidCountryCode;
+use App\Rules\ValidRegionCode;
+use App\Rules\ValidZip;
 use App\ValueObjects\Address;
 use Illuminate\Validation\ValidationException;
 
@@ -32,11 +35,11 @@ dataset('invalid_country_codes', [
         'The country code field is required.',
     ],
     [
-        str_repeat('U', Country::CODE_LENGTH - 1), // min 2 chars
+        str_repeat('U', ValidCountryCode::CODE_LENGTH - 1), // min 2 chars
         'The country code field must be 2 characters.',
     ],
     [
-        str_repeat('U', Country::CODE_LENGTH + 1), // max 2 chars
+        str_repeat('U', ValidCountryCode::CODE_LENGTH + 1), // max 2 chars
         'The country code field must be 2 characters.',
     ],
     [
@@ -44,7 +47,11 @@ dataset('invalid_country_codes', [
         'The country code field format is invalid.',
     ],
     [
-        'zz', // code that does not exist
+        'zz', // only uppercase chars
+        'The country code field format is invalid.',
+    ],
+    [
+        'ZZ', // code that does not exist
         'The selected country code is invalid.',
     ],
 ]);
@@ -66,7 +73,7 @@ dataset('invalid_region_codes', [
         'The region code field is required.',
     ],
     [
-        str_repeat('U', Region::CODE_MIN_LENGTH - 1), // min 3 chars
+        str_repeat('U', ValidRegionCode::CODE_MIN_LENGTH - 1), // min 3 chars
         'The region code field must be at least 3 characters.',
     ],
     [
@@ -75,6 +82,10 @@ dataset('invalid_region_codes', [
     ],
     [
         '1$-1$', // non-letters
+        'The region code field format is invalid.',
+    ],
+    [
+        'us-zz', // code that does not exist
         'The region code field format is invalid.',
     ],
     [
@@ -100,7 +111,7 @@ dataset('invalid_city_names', [
         'The city field is required.',
     ],
     [
-        str_repeat('a', Address::MAX_CITY_LENGTH + 1), // max 50 chars
+        str_repeat('a', ValidCity::MAX_LENGTH + 1), // max 50 chars
         'The city field must not be greater than 50 characters.',
     ],
 ]);
@@ -122,7 +133,7 @@ dataset('invalid_zip_codes', [
         'The zip field is required.',
     ],
     [
-        str_repeat('a', Address::MAX_ZIP_LENGTH + 1), // max 20 chars
+        str_repeat('a', ValidZip::MAX_LENGTH + 1), // max 20 chars
         'The zip field must not be greater than 20 characters.',
     ],
     [
@@ -156,7 +167,7 @@ dataset('invalid_line_one_data', [
         'The line one field is required.',
     ],
     [
-        str_repeat('a', Address::MAX_LINE_LENGTH + 1), // max 20 chars
+        str_repeat('a', ValidAddressLine::MAX_LENGTH + 1), // max 20 chars
         'The line one field must not be greater than 255 characters.',
     ],
 ]);
@@ -174,7 +185,7 @@ it('fails with invalid line one address', function (string $invalidLineOne, stri
 
 dataset('invalid_line_two_data', [
     [
-        str_repeat('a', Address::MAX_LINE_LENGTH + 1), // max 20 chars
+        str_repeat('a', ValidAddressLine::MAX_LENGTH + 1), // max 20 chars
         'The line two field must not be greater than 255 characters.',
     ],
 ]);
