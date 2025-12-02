@@ -10,7 +10,8 @@ Route::inertia('/', 'Welcome')
     ->name('home');
 
 Route::prefix('register')->name('register')->group(function () {
-    Route::get('/', [RegisterController::class, 'create']);
+    Route::get('/', [RegisterController::class, 'create'])
+        ->middleware(['guest']);
     Route::post('/', [RegisterController::class, 'store'])
         ->middleware(['guest', 'throttle:5,1'])
         ->name('.store');
