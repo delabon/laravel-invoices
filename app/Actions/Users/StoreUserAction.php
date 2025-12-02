@@ -54,10 +54,13 @@ final class StoreUserAction
             });
 
             return $user;
-        } catch (Exception) {
+        } catch (Exception $e) {
             DB::rollBack();
 
-            throw new RuntimeException('Register has been failed. Please try again later.');
+            throw new RuntimeException(
+                message: 'Register has been failed. Please try again later.',
+                previous: $e
+            );
         }
     }
 }
